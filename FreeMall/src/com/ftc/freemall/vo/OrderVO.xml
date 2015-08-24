@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="order">
+	<typeAlias alias="orderVO" type="com.ftc.freemall.vo.OrderVO" />
+
+	<cacheModel id="oneDayUrgerType" type="LRU">
+		<flushInterval hours="24" />
+	</cacheModel>
+	<resultMap id="orderRS" class="orderVO">
+		<result property="orderID" column="orderid"/>
+		<result property="receiverName" column="receivername" />
+		<result property="regionCode" column="regioncode" />
+		<result property="cityCode" column="citycode" />
+		<result property="countyCode" column="countycode" />
+		<result property="address" column="address" />
+		<result property="receiverMobile" column="receivermobile" />
+		<result property="createDate" column="createdate" />
+		<result property="prodID" column="prodid" />
+		<result property="prodName" column="prodname" />
+		<result property="price" column="price" />
+		<result property="agentName" column="agentname" />
+		<!-- <result property="openid" column="openid" /> -->
+	</resultMap>
+		
+	<insert id="doInsert" parameterClass="orderVO">
+		INSERT INTO b_order<dynamic><isParameterPresent>(receiverMobile,createDate
+		<isPropertyAvailable property="receiverName"><isNotNull prepend="," property="receiverName">receiverName</isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="regionCode"><isNotNull prepend="," property="regionCode">regionCode</isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="cityCode"><isNotNull prepend="," property="cityCode">cityCode</isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="countyCode"><isNotNull prepend="," property="countyCode">countyCode</isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="address"><isNotNull prepend="," property="address">address</isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="prodID"><isNotNull prepend="," property="prodID">prodID</isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="prodName"><isNotNull prepend="," property="prodName">prodName</isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="price"><isNotNull prepend="," property="price">price</isNotNull></isPropertyAvailable>
+		<!-- <isPropertyAvailable property="openid"><isNotNull prepend="," property="openid">openid</isNotNull></isPropertyAvailable> -->
+		) VALUES(#receiverMobile#,SYSDATE()
+		<isPropertyAvailable property="receiverName"><isNotNull prepend="," property="receiverName">#receiverName#</isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="regionCode"><isNotNull prepend="," property="regionCode">#regionCode#</isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="cityCode"><isNotNull prepend="," property="cityCode">#cityCode#</isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="countyCode"><isNotNull prepend="," property="countyCode">#countyCode#</isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="address"><isNotNull prepend="," property="address">#address#</isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="prodID"><isNotNull prepend="," property="prodID">#prodID#</isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="prodName"><isNotNull prepend="," property="prodName">#prodName#</isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="price"><isNotNull prepend="," property="price">#price#</isNotNull></isPropertyAvailable>
+		<!-- <isPropertyAvailable property="openid"><isNotNull prepend="," property="openid">#openid#</isNotNull></isPropertyAvailable> -->
+		)</isParameterPresent></dynamic> 
+	</insert>
+	
+	<select id="checkFrist" resultMap="orderRS" parameterClass="orderVO">
+		SELECT * FROM b_order 
+		 WHERE 1=1 <isParameterPresent>
+		<isPropertyAvailable property="receiverMobile"><isNotNull property="receiverMobile"><isNotEmpty prepend="AND" property="receiverMobile"> receiverMobile = #receiverMobile#  </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="prodID"><isNotNull property="prodID"><isNotEmpty prepend="AND" property="prodID"> prodid = #prodID# </isNotEmpty></isNotNull></isPropertyAvailable>
+		</isParameterPresent>
+	</select>
+	
+	<select id="getOrderList" resultMap="orderRS" parameterClass="orderVO">
+		SELECT * FROM b_order a left join b_agent b on a.prodid=b.agentid
+		 WHERE 1=1 <isParameterPresent>
+		<isPropertyAvailable property="regionCode"><isNotNull property="regionCode"><isNotEmpty prepend="AND" property="regionCode"> regionCode = #regionCode#  </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="cityCode"><isNotNull property="cityCode"><isNotEmpty prepend="AND" property="cityCode"> cityCode = #cityCode# </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="countyCode"><isNotNull property="countyCode"><isNotEmpty prepend="AND" property="countyCode"> countyCode = #countyCode# </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="prodName"><isNotNull property="prodName"><isNotEmpty prepend="AND" property="prodName"> prodName = #prodName# </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="prodID"><isNotNull property="prodID"><isNotEmpty prepend="AND" property="prodID"> prodID = #prodID# </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="beginTime"><isNotNull property="beginTime"><isNotEmpty prepend="AND" property="beginTime"> createdate >= str_to_date(#beginTime#,'%Y-%m-%d %H:%i:%s') </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="endTime"><isNotNull property="endTime"><isNotEmpty prepend="AND" property="endTime"> <![CDATA[ createdate <= str_to_date(#endTime#,'%Y-%m-%d %H:%i:%s') ]]> </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="agentName"><isNotNull property="agentName"><isNotEmpty prepend="AND" property="agentName"> b.agentName = #agentName# </isNotEmpty></isNotNull></isPropertyAvailable>
+		</isParameterPresent>
+		order by createdate desc
+	</select>
+</sqlMap>
+
+

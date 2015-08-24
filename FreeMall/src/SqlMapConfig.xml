@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+	<properties resource="database.properties"/>
+	<settings cacheModelsEnabled="true" enhancementEnabled="true" useStatementNamespaces="true" maxSessions="64" maxTransactions="12" maxRequests="128"/>
+	<typeHandler jdbcType="CLOB" javaType="java.lang.String" callback="com.ibatis.sqlmap.engine.type.ClobTypeHandlerCallback"/>
+	<transactionManager type="JDBC">
+		<dataSource type="SIMPLE">
+			<property value="${driver}" name="JDBC.Driver"/>
+			<property value="${url}" name="JDBC.ConnectionURL"/>
+			<property value="${username}" name="JDBC.Username"/>
+			<property value="${password}" name="JDBC.Password"/>
+			<property value="15" name="Pool.MaximumActiveConnections"/>
+			<property value="15" name="Pool.MaximumIdleConnections"/>
+			<property value="1000" name="Pool.MaximumWait"/>
+		</dataSource>
+	</transactionManager>
+	
+	 <sqlMap resource="com/ftc/freemall/vo/OrderVO.xml"/>
+	 <sqlMap resource="com/ftc/freemall/vo/VerifiCodeVO.xml"/>
+	 <sqlMap resource="com/ftc/freemall/vo/AgentVO.xml"/>
+</sqlMapConfig>
+

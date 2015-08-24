@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="agent">
+	<typeAlias alias="agentVO" type="com.ftc.freemall.vo.AgentVO" />
+
+	<cacheModel id="oneDayUrgerType" type="LRU">
+		<flushInterval hours="24" />
+	</cacheModel>
+	<resultMap id="agentRS" class="agentVO">
+		<result property="agentID" column="agentid"/>
+		<result property="agentName" column="agentname" />
+	</resultMap>
+		
+	<select id="getAgentList" resultMap="agentRS" parameterClass="agentVO">
+		SELECT * FROM  b_agent
+		order by agentid desc
+	</select>
+</sqlMap>
+
+

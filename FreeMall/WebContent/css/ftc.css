@@ -1,0 +1,19 @@
+@charset "utf-8";
+/* CSS Document */
+
+.price {
+	color: #f40;
+}
+	
+.total-sale {
+	font-size: 7px;
+	color: #666;
+}
+	
+.sortrow {
+	color:#000
+}
+	
+.sortarr {
+	color:#000;	
+}

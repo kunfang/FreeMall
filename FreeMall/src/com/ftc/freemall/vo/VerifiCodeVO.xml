@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="vcode">
+	<typeAlias alias="verificodeVO" type="com.ftc.freemall.vo.VerifiCodeVO" />
+
+	<cacheModel id="oneDayUrgerType" type="LRU">
+		<flushInterval hours="24" />
+	</cacheModel>
+	
+	<resultMap id="verificodeRS" class="verificodeVO">
+		<result property="codeid" column="codeid"/>
+		<result property="phone" column="phone" />
+		<result property="verificode" column="verificode" />
+		<result property="createdate" column="createdate" />
+	</resultMap>
+		
+	<insert id="doInsertCode" parameterClass="verificodeVO"> 
+		INSERT INTO b_verificode(createdate,phone,verificode)
+		VALUES(SYSDATE(),#phone#,#verificode#)
+	</insert>
+	
+	<select id="checkexist" resultMap="verificodeRS" parameterClass="verificodeVO">
+		SELECT * FROM b_verificode
+		 WHERE 1=1 <isParameterPresent>
+		<isPropertyAvailable property="phone"><isNotNull property="phone"><isNotEmpty prepend="AND" property="phone"> phone = #phone#  </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="verificode"><isNotNull property="verificode"><isNotEmpty prepend="AND" property="verificode"> verificode = #verificode# </isNotEmpty></isNotNull></isPropertyAvailable>
+		and createdate >= DATE_ADD(sysdate(),INTERVAL -3 MINUTE) order by createdate desc limit 1
+		</isParameterPresent>
+	</select>
+</sqlMap>
+
+
