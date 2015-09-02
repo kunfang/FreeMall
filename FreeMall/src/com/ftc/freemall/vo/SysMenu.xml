@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="sysMenu">
+	<typeAlias alias="sysMenuVO" type="com.ftc.freemall.vo.SysMenuVO" />
+
+	<cacheModel id="oneDayUrgerType" type="LRU">
+		<flushInterval hours="24" />
+	</cacheModel>
+	<resultMap id="sysMenuRS" class="sysMenuVO">
+		<result property="menuId" column="MenuId" />
+		<result property="menuNme" column="MenuName" />
+		<result property="menuUrl" column="Url" />
+		<result property="menuLevel" column="Level" />
+		<result property="parentId" column="UpMenu" />
+	</resultMap>
+		
+	
+	<select id="toList" resultMap="sysMenuRS" parameterClass="sysMenuVO">
+		SELECT * FROM s_systemmenu 
+		 WHERE 1=1 <isParameterPresent>
+		<isPropertyAvailable property="menuId"><isNotNull property="menuId"><isNotEmpty prepend="AND" property="menuId"> MenuId = #menuId#  </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="menuNme"><isNotNull property="menuNme"><isNotEmpty prepend="AND" property="menuNme"> MenuName LIKE '%' || #menuNme# || '%' </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="menuUrl"><isNotNull property="menuUrl"><isNotEmpty prepend="AND" property="menuUrl"> Url LIKE '%' || #menuUrl# || '%' </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="menuLevel"><isNotNull property="menuLevel"><isNotEmpty prepend="AND" property="menuLevel"> Level = #menuLevel#</isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="parentId"><isNotNull property="parentId"><isNotEmpty prepend="AND" property="parentId"> UpMenu = #parentId# </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="orderFid"><isNotNull property="orderFid"><isNotEmpty prepend=" ORDER BY " property="orderFid"> $orderFid$ </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="orderType"><isNotNull property="orderType"><isNotEmpty prepend="  " property="orderType"> $orderType$ </isNotEmpty></isNotNull></isPropertyAvailable>
+		</isParameterPresent>
+	</select>
+	
+	<select id="getTotalCount" resultClass="int" parameterClass="sysMenuVO">
+		SELECT count(MenuId) FROM s_systemmenu 
+		 WHERE 1=1 <isParameterPresent>
+		<isPropertyAvailable property="menuId"><isNotNull property="menuId"><isNotEmpty prepend="AND" property="menuId"> MenuId = #menuId#  </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="menuNme"><isNotNull property="menuNme"><isNotEmpty prepend="AND" property="menuNme"> MenuName LIKE '%' || #menuNme# || '%' </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="menuUrl"><isNotNull property="menuUrl"><isNotEmpty prepend="AND" property="menuUrl"> Url LIKE '%' || #menuUrl# || '%' </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="menuLevel"><isNotNull property="menuLevel"><isNotEmpty prepend="AND" property="menuLevel"> Level = #menuLevel#</isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="parentId"><isNotNull property="parentId"><isNotEmpty prepend="AND" property="parentId"> UpMenu = #parentId# </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="orderFid"><isNotNull property="orderFid"><isNotEmpty prepend=" ORDER BY " property="orderFid"> $orderFid$ </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="orderType"><isNotNull property="orderType"><isNotEmpty prepend="  " property="orderType"> $orderType$ </isNotEmpty></isNotNull></isPropertyAvailable>
+		</isParameterPresent>
+	</select>
+	
+	<select id="getAdminMenu" resultMap="sysMenuRS" parameterClass="string">
+		select * from s_systemmenu  $sqlWhere$ order by MenuId,UpMenu
+	</select>
+</sqlMap>
+
+

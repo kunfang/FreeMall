@@ -8,4 +8,6 @@ public interface OrderService {
 	public OrderVO searchOrderExists(OrderVO order) throws Exception;
 	public void insertOrder(OrderVO order) throws Exception;
 	public List<OrderVO> getOrderList(OrderVO pvo) throws Exception;
+	public List<OrderVO> getAgentRanking() throws Exception;
+	public List<OrderVO> getProdList() throws Exception;
 }

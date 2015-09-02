@@ -86,7 +86,13 @@
 							</tr>
 							<tr class="td1">
 								<td align="right" class="mctitle">产品名称:</td>
-								<td align="left" class="mctitle"><form:input path="prodName"/></td>
+								<td align="left" class="mctitle">
+								<form:select path="prodName">
+										<option value="">请选择产品</option>
+										<form:options items="${prodList}" itemValue="prodName" itemLabel="prodName"/>
+									</form:select>
+								
+								</td>
 								<td align="right" class="mctitle">代理:</td>
 								<td align="left" class="mctitle">
 									<form:select path="agentName">
@@ -106,6 +112,9 @@
 					
 							<table class="table3" style="font-size:13px;">
 							<tr>
+								<th nowrap scope="col" height="24" >
+									<div orderBy="true">序号</div>
+								</th>
 								<th nowrap scope="col" height="24" >
 									<div orderBy="true">接收人名称</div>
 								</th>
@@ -152,6 +161,11 @@
 								<tr
 										onmouseover="javascript:changeBgColorOnMouseOver(this);"
 										onmouseout="javascript:changeBgColorOnMouseOut(this);" >
+									<td>
+										&nbsp;
+										  ${orderList.orderID}
+										&nbsp;
+									</td>
 									<td>
 										&nbsp;
 										  ${orderList.receiverName}

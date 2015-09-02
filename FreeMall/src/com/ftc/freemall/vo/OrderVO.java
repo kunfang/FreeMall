@@ -22,6 +22,9 @@ public class OrderVO implements Serializable{
 	private String endTime;
 	
 	private String agentName;
+	private Integer agentID;
+	
+	
 	
 	
 	/*private String openid; // 微信id
@@ -34,6 +37,14 @@ public class OrderVO implements Serializable{
 	public void setOpenid(String openid) {
 		this.openid = openid;
 	}*/
+
+	public Integer getAgentID() {
+		return agentID;
+	}
+
+	public void setAgentID(Integer agentID) {
+		this.agentID = agentID;
+	}
 
 	public String getBeginTime() {
 		return beginTime;

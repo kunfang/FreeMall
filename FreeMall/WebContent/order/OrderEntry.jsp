@@ -8,6 +8,23 @@
    String prodid = (String)request.getParameter("prodid");
    String prodname = (String)request.getParameter("prodname");
    String price = (String)request.getParameter("price");
+   
+   String agentid = (String)request.getParameter("agentid");
+   
+   if (agentid == null) {
+	   if (prodid.length() == 4){
+		   agentid = prodid.substring(0, 2);
+		   prodid = prodid.substring(3);
+	   } else if (prodid.length() == 5) {
+		   agentid = prodid.substring(0, 3);
+		   prodid = prodid.substring(4);
+	   } else if (prodid.length() == 1) {
+		   agentid = "1";
+	   }
+	   
+	   
+	   
+   }
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -100,6 +117,7 @@ $(function(){
 		<input name="prodID" type="hidden" value="<%=prodid%>">
 		<input name="prodName" type="hidden" value="<%=prodname%>">
 		<input name="price" type="hidden" value="<%=price%>">
+		<input name="agentID" type="hidden" value="<%=agentid%>">
 	</form>
 </body>
 <script type="text/javascript">
@@ -134,10 +152,14 @@ $(function(){
 	}
 
 	function save(){
+		
 		var flag = check();
 		if (!flag){
 			return;
 		}
+		
+		$('#submitAddress').attr('disabled','true');
+		$('#submitAddress').css('background','gray');
 		
 		$.ajax({
 			type: "POST",
@@ -147,6 +169,8 @@ $(function(){
 				if (msg=='000000') {
 					window.location="<%=context%>/order/Success.jsp"
 				} else if (msg=='100000') {
+					$('#submitAddress').attr('disabled','');
+					$('#submitAddress').css('background','#fe5955');
 					H5Alert("系统繁忙，请稍后重试");
 				} else if (msg=='200000') {
 					H5Alert("您已经享受过本次优惠了");

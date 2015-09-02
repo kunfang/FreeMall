@@ -83,4 +83,50 @@ public class OrderServiceImpl implements OrderService {
 		return orderList;
 	}
 
+	@Override
+	public List<OrderVO> getAgentRanking() throws Exception {
+		if (logger.isDebugEnabled()) {
+			logger.debug("getAgentRanking() - start"); //$NON-NLS-1$
+		}
+		List<OrderVO> orderList = null;
+			try {
+			     dao.startTransaction();
+			     orderList = (List<OrderVO>)dao.toList("order.getAgentRanking",null);
+				 
+			} catch (Exception e) {
+				dao.endTransaction();
+				e.printStackTrace();
+			}finally{
+				dao.commitTransation();
+			}
+			
+		if (logger.isDebugEnabled()) {
+			logger.debug("getAgentRanking() - end"); //$NON-NLS-1$
+		}
+		return orderList;
+	}
+
+	@Override
+	public List<OrderVO> getProdList() throws Exception {
+		if (logger.isDebugEnabled()) {
+			logger.debug("getProdList() - start"); //$NON-NLS-1$
+		}
+		List<OrderVO> prodList = null;
+			try {
+			     dao.startTransaction();
+			     prodList = (List<OrderVO>)dao.toList("order.getProdList",null);
+				 
+			} catch (Exception e) {
+				dao.endTransaction();
+				e.printStackTrace();
+			}finally{
+				dao.commitTransation();
+			}
+			
+		if (logger.isDebugEnabled()) {
+			logger.debug("getProdList() - end"); //$NON-NLS-1$
+		}
+		return prodList;
+	}
+
 }

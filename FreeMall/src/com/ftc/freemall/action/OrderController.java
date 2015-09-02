@@ -90,9 +90,11 @@ public class OrderController {
 		
 		try {
 			List<OrderVO> orderList = orderService.getOrderList(orderVO);
+			List<OrderVO> prodList = orderService.getProdList();
 			List<AgentVO> agentList = agentService.getAgentList(null);
 			model.addAttribute("orderList",orderList);
 			model.addAttribute("agentList",agentList);
+			model.addAttribute("prodList",prodList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -101,6 +103,31 @@ public class OrderController {
 			logger.debug("getOrderList(OrderVO) - end"); //$NON-NLS-1$
 		}
 		return "order/OrderList";
+	}
+	
+	@RequestMapping(params="method=getAgentOrderList") 
+	public String getAgentOrderList(OrderVO orderVO, Model model, int agentID) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("getAgentOrderList(OrderVO) - start"); //$NON-NLS-1$
+		}
+		
+		try {
+			orderVO.setAgentID(agentID);
+			
+			List<OrderVO> orderList = orderService.getOrderList(orderVO);
+			List<OrderVO> prodList = orderService.getProdList();
+			List<AgentVO> agentList = agentService.getAgentList(null);
+			model.addAttribute("orderList",orderList);
+			model.addAttribute("agentList",agentList);
+			model.addAttribute("prodList",prodList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if (logger.isDebugEnabled()) {
+			logger.debug("getAgentOrderList(OrderVO) - end"); //$NON-NLS-1$
+		}
+		return "order/AgentOrderList";
 	}
 	
 	@RequestMapping(params="method=exportCSV")
@@ -123,7 +150,7 @@ public class OrderController {
 	        out.write(new byte[]{(byte)0xEF,(byte)0xBB,(byte)0xBF});
 			List<OrderVO> orderList = orderService.getOrderList(orderVO);
 			
-			String header = "接受人姓名,省份,城市,县,地址,手机,提交时间,产品名称,代理";
+			String header = "序号,接受人姓名,省份,城市,县,地址,手机,提交时间,产品名称,代理";
 			header = "\"" + header.replaceAll(",", "\",\"") + "\"\r\n";
 			out.write(header.getBytes(charset));
 			StringBuffer sbf=new StringBuffer();
@@ -131,6 +158,8 @@ public class OrderController {
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			
 			for (OrderVO order:orderList) {
+				sbf.append("\"").append(order.getOrderID()).append("\"");
+				sbf.append(",");
 				sbf.append("\"").append(order.getReceiverName()).append("\"");
 				sbf.append(",");
 				sbf.append("\"").append(order.getRegionCode()).append("\"");
@@ -164,5 +193,92 @@ public class OrderController {
 		if (logger.isDebugEnabled()) {
 			logger.debug("exportOrderListCSV(OrderVO) - end"); //$NON-NLS-1$
 		}
+	}
+	
+	@RequestMapping(params="method=exportAgentCSV")
+	public void exportAgentCSV(OrderVO orderVO,HttpServletResponse response){
+		if (logger.isDebugEnabled()) {
+			logger.debug("exportAgentCSV(OrderVO) - start"); //$NON-NLS-1$
+		}
+		OutputStream out = null;
+		String charset = "UTF-8";
+		try {
+			String csvFileName = "orders.csv";
+			response.setContentType("text/csv");
+			
+			// creates mock data
+	        String headerKey = "Content-Disposition";
+	        String headerValue = String.format("attachment; filename=\"%s\"",csvFileName);
+	        response.setHeader(headerKey, headerValue);
+	        
+	        out = response.getOutputStream();
+	        out.write(new byte[]{(byte)0xEF,(byte)0xBB,(byte)0xBF});
+			List<OrderVO> orderList = orderService.getOrderList(orderVO);
+			
+			String header = "序号,接受人姓名,省份,城市,县,提交时间,产品名称";
+			header = "\"" + header.replaceAll(",", "\",\"") + "\"\r\n";
+			out.write(header.getBytes(charset));
+			StringBuffer sbf=new StringBuffer();
+			
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			
+			for (OrderVO order:orderList) {
+				sbf.append("\"").append(order.getOrderID()).append("\"");
+				sbf.append(",");
+				sbf.append("\"").append(order.getReceiverName()).append("\"");
+				sbf.append(",");
+				sbf.append("\"").append(order.getRegionCode()).append("\"");
+				sbf.append(",");
+				sbf.append("\"").append(order.getCityCode()).append("\"");
+				sbf.append(",");
+				sbf.append("\"").append(order.getCountyCode()).append("\"");
+				sbf.append(",");
+				/*sbf.append("\"").append(order.getAddress()).append("\"");
+				sbf.append(",");
+				sbf.append("\"").append(order.getReceiverMobile()).append("\"");
+				sbf.append(",");*/
+				sbf.append("\"").append(format.format(order.getCreateDate())).append("\"");
+				sbf.append(",");
+				sbf.append("\"").append(order.getProdName()).append("\"");
+				/*sbf.append(",");
+				sbf.append("\"").append(order.getAgentName()).append("\"");*/
+				sbf.append("\n");
+			}
+			
+			out.write(sbf.toString().getBytes(charset));
+			
+			try{out.flush();}catch(Exception ex){}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{out.close();}catch(Exception ex){}
+		}
+		
+		if (logger.isDebugEnabled()) {
+			logger.debug("exportAgentCSV(OrderVO) - end"); //$NON-NLS-1$
+		}
+	}
+	
+	@RequestMapping(params="method=getAgentRanking")
+	public String getAgentRanking(Model model) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("getAgentRanking(model) - start"); //$NON-NLS-1$
+		}
+		
+		try {
+			
+			List<OrderVO> agentList = orderService.getAgentRanking();
+			List<OrderVO> prodList = orderService.getProdList();
+			model.addAttribute("agentList",agentList);
+			model.addAttribute("prodList",prodList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if (logger.isDebugEnabled()) {
+			logger.debug("getAgentRanking(model) - end"); //$NON-NLS-1$
+		}
+		return "order/AgentRanking";
 	}
 }

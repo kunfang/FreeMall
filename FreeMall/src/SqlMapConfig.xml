@@ -19,5 +19,7 @@
 	 <sqlMap resource="com/ftc/freemall/vo/OrderVO.xml"/>
 	 <sqlMap resource="com/ftc/freemall/vo/VerifiCodeVO.xml"/>
 	 <sqlMap resource="com/ftc/freemall/vo/AgentVO.xml"/>
+	 <sqlMap resource="com/ftc/freemall/vo/UserVo.xml"/>
+	 <sqlMap resource="com/ftc/freemall/vo/SysMenu.xml"/>
 </sqlMapConfig>
 
