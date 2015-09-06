@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -116,6 +118,105 @@ public class UserController {
     		     result+=(Integer.toHexString(digest[i] & 0XFF));   
     	 }
     	    return result.toLowerCase(); 
+	}
+	
+	/**
+     *@param  [HttpServletRequest] [绑定属性值]
+     *@return  [返回需要跳转的页面名称]
+     *@description [系统退出]
+     */
+	@RequestMapping(params="method=logout") 
+	public String logout(HttpServletRequest request){
+		if (logger.isDebugEnabled()) {
+			logger.debug("logout(HttpServletRequest) - start"); //$NON-NLS-1$
+		}
+		clearSession(request);
+		request.getSession().invalidate();
+		if (logger.isDebugEnabled()) {
+			logger.debug("logout(HttpServletRequest) - end"); //$NON-NLS-1$
+		}
+		return "login";
+	}
+	
+	/**
+     *@param  [HttpServletRequest] [获取Session会话]
+     *@description [清空登录的Session值]
+     */
+	public void clearSession(HttpServletRequest request) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("clearSession(HttpServletRequest) - start"); //$NON-NLS-1$
+		}
+		HttpSession session = request.getSession();
+		if (session.getAttribute("userID") != null)
+			session.removeAttribute("userID"); //移除登录用户名;
+		if (session.getAttribute("oldPass") != null)
+			session.removeAttribute("oldPass"); //移除密码;
+		if (session.getAttribute("trueName") != null) 
+			session.removeAttribute("trueName"); //移除真实姓名;
+		if (session.getAttribute("dptName") != null)
+			session.removeAttribute("dptName"); //移除部门;
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("clearSession(HttpServletRequest) - end"); //$NON-NLS-1$
+		}
+	}
+	
+	/**
+     *@param  [String,HttpServletRequest,HttpServletResponse] [是否修改密码,绑定属性值,错误信息返回到页面]
+     *@return  [返回需要跳转的页面名称]
+     *@description [密码修改]
+     */
+	@RequestMapping(params="method=pwd") 
+	public String pwd(String isnew,HttpServletRequest request,HttpServletResponse response){
+		if (logger.isDebugEnabled()) {
+			logger.debug("doChangePwd(ActionParameter) - start"); //$NON-NLS-1$
+		}
+		
+		if(!"".equals(isnew) && "Y".equals(isnew)){
+			return "updatePsd";
+		}else{
+			String userid =String.valueOf((Integer)request.getSession().getAttribute("userId"));
+			String oldpass=request.getParameter("oldPsd");
+			String newpass=request.getParameter("newPsd");
+			if(userid!=null && !"".equals(userid)){
+				try {
+					User user =asms.toView(userid);
+					String pass=user.getPassword();
+					String retStr = "";
+					
+					if(pass.equals(this.encryPass(oldpass))){
+						User users=new User();
+						users.setPassword(this.encryPass(newpass));
+						users.setUserid(Integer.parseInt(userid));
+						int flag = asms.doUpdate(users);
+						if(flag == 1)
+						{
+							retStr = "1";//密码修改成功
+						}
+						else
+						{
+							retStr = "2";	  //密码修改失败
+						}
+					}
+					else
+					{
+						retStr = "0";//原始密码输入错误
+					}
+					response.setContentType("text/html; charset=UTF-8");
+					response.getWriter().write(retStr);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+			if (logger.isDebugEnabled()) {
+				logger.debug("doChangePwd(ActionParameter) - end"); //$NON-NLS-1$
+			}
+			
+			return null;
+		}
+		
 	}
 	
 

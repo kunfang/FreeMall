@@ -46,16 +46,19 @@
 			obj.style.backgroundColor = '#cccccc';
 		}
 		
-		function toSearch(flag){
+		function toSearch(flag,obj){	
+			if(obj=="go"){
+				document.myform.curPage.value=1;
+			}
 			$("#regionCode").val($("#provinceId").val());
 			$("#cityCode").val($("#cityId").val());
-			document.forms.method.value="getOrderList";
-			document.forms.submit();
+			document.myform.method.value="getOrderList";
+			document.myform.submit();
 		}
 		
 		function exportCSV() {
-			document.forms.method.value="exportCSV";
-			document.forms.submit();
+			document.myform.method.value="exportCSV";
+			document.myform.submit();
 		}
 	</script>
   </head>
@@ -64,7 +67,7 @@
 		    <div class="box">
 			<div class="box_top"></div>
 			<div class="box_center">	
-		<form:form commandName="orderVO" method="post" action="order.do" name="forms">
+		<form:form commandName="orderVO" method="post" action="order.do" name="myform">
 			<input type="hidden" name="method" value="getOrderList" />
 					<div id="citydiv">
 						<table class="table1" >
@@ -105,7 +108,7 @@
 					</div>
 						&nbsp;
 					<div align="center">
-						<input type="button" class="buttonClass" value="查询(F)" onclick="toSearch('search')"/>&nbsp;&nbsp;
+						<input type="button" class="buttonClass" value="查询(F)" onclick="toSearch('search','go')"/>&nbsp;&nbsp;
 						<input type="button" class="buttonClass" value="导出" onclick="exportCSV()" />&nbsp;&nbsp;
 					</div>
 					<div style="width:95%; margin:0px auto;">
@@ -215,6 +218,9 @@
 							</c1:forEach>
 						</table>
 					</div>
+					 <div class="digg">
+                            <%@ include file="/common/pageLocation.in" %>
+                     </div>
 		      </form:form>
 			</div>
 			<div class="box_bottom"></div>

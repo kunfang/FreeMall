@@ -39,15 +39,16 @@ color: #000000;
 </div>	
 	<div style="width:980px; margin:0 auto; height:20px;">
 		<ul class="top_ul">
-				<%-- <li>|</li>
-			<li><a href="<%=context%>/menuList.do?method=pwd&isnew=Y">修改密码</a></li>
+				 
+			<li><a href="<%=context%>/userLoginlist.do?method=pwd&isnew=Y">修改密码</a></li>
 			<!--<li>|</li>-->
 			<!--<li><a href="#" onclick="javascript:helponclick();">操作帮助</a></li>-->
 			<li>|</li>
-			<li><a href="<%=context%>/menuList.do?method=logout">退出系统</a></li>
-			<li>|</li>  --%>
+			<li><a href="<%=context%>/userLoginlist.do?method=logout">退出系统</a></li>
+			<li>|</li>
+			<li>操作员 : <%=session.getAttribute("trueName")%></li>    
 		</ul>
-		<div class="top_text">操作员 : <%=session.getAttribute("trueName")%></div>
+		<!-- <div class="top_text"></div> -->
 	</div>
 	<%--
     <div class="line_ul_div" >

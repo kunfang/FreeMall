@@ -92,6 +92,7 @@
             font: 11px Arial;
         }
     </style>
+
 </HEAD>
 <body onload="getFocus()" >
 <form method="post" action="userLoginlist.do" name="forms" onsubmit="return login()">
@@ -114,6 +115,7 @@
 </form>
 </body>
 <script type="text/javascript" >
+	
 		function getFocus(){
 			document.getElementById("username").focus();
 		 }

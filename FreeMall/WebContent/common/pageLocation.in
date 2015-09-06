@@ -1,0 +1,69 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+
+<style type="text/css">
+			#pagediv ul li a { color:#333; text-decoration:none;}
+			#pagediv ul { list-style:none;margin-left:150px; }
+			#pagediv ul li { float:left; border:1px solid #5d9cdf; height:22px;width:50px;padding-top:5px;margin:0px 5px;}
+		</style>
+		<script type="text/javascript">
+			function page_location(obj){
+				var curPage =document.myform.curPage.value;
+				var totalPage =document.myform.totalPage.value;
+				var gotoPage = document.myform.goto.value;
+				var size = document.myform.customersize.value;
+				var paramPage;
+				if(obj=='first'){
+					paramPage=1;			
+				}
+				if(obj=='pre'){
+					if(curPage==1){
+						paramPage=1;
+					}else{
+						paramPage=parseInt(curPage)-1;
+					}					
+				}
+				if(obj=='next'){
+					if(curPage==totalPage){
+						paramPage=curPage;
+					}else{
+						paramPage=parseInt(curPage)+1;
+						
+					}					
+				}
+				if(obj=='last'){
+					paramPage=totalPage;			
+				}
+				if(obj=='goto'){
+					if(gotoPage==null || gotoPage.length==0){
+						paramPage=curPage;
+					}else{
+						paramPage = gotoPage;
+					}	
+				}
+				if(size < 1 ){
+					alert("每页显示条数不能小于1条");
+					return;
+				}				
+				document.myform.pageSize.value=size;
+				document.myform.curPage.value=paramPage;
+				toSearch('search');
+			}
+		</script>
+
+<div id="pagediv" style="width:980px; height:50px; margin:0px auto;text-align:center;margin-top:10px" align="center">
+					 <input type="hidden" name="curPage" value="${pageList.curPage}" />
+					 <input type="hidden" name="totalPage" value="${pageList.totalPage}" />
+					 <input type="hidden" name="pageSize" value="${pageList.totalPage}" />
+					 <ul>
+					    <li><a href="javascript:page_location('first');" style="border:0px;">首页</a></li>
+					    <li><a href="javascript:page_location('pre');" style="border:0px;">上页</a></li>
+					    <li><a href="javascript:page_location('next');" style="border:0px;">下页</a></li>
+					    <li><a href="javascript:page_location('last');" style="border:0px;">尾页</a></li>
+					    <li style="float:left; border:0px solid #5d9cdf; height:22px;width:50px;padding-top:0px;margin:0px 5px;"><input type="text" name="goto" style="width:40px;"></li>
+					    <li><a href="javascript:page_location('goto');" style="border:0px;">跳转</a></li>
+					    <li class="pageinfo" style="width:80px;">第${pageList.curPage}页</li>
+						<li class="pageinfo" style="width:120px;">每页显示&nbsp;<input type="text" name="customersize" style="width:38px;" value="${pageList.pageSize}">&nbsp;条</li>
+						<li class="pageinfo" style="width:100px;">共${pageList.totalPage}页</li>
+  					 </ul>
+</div>
+

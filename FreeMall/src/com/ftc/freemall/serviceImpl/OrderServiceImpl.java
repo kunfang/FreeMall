@@ -1,6 +1,11 @@
 package com.ftc.freemall.serviceImpl;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -8,6 +13,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.ftc.foundation.dao.DefaultDAO;
+import com.ftc.foundation.view.PageUtil;
 import com.ftc.freemall.service.OrderService;
 import com.ftc.freemall.vo.OrderVO;
 
@@ -61,26 +67,70 @@ public class OrderServiceImpl implements OrderService {
 }
 
 	@Override
-	public List<OrderVO> getOrderList(OrderVO order) throws Exception {
+	public List<OrderVO> getOrderList(OrderVO order,PageUtil pUtil) throws Exception {
 		if (logger.isDebugEnabled()) {
 			logger.debug("getOrderList(OrderVO) - start"); //$NON-NLS-1$
 		}
 		List<OrderVO> orderList = null;
-			try {
-			     dao.startTransaction();
-			     orderList = (List<OrderVO>)dao.toList("order.getOrderList", order);
-				 
-			} catch (Exception e) {
-				dao.endTransaction();
-				e.printStackTrace();
-			}finally{
-				dao.commitTransation();
-			}
+		     
+			     String sqlWhere="";
+			     
+			     if(order.getRegionCode()!=null && !"".equals(order.getRegionCode())){
+						sqlWhere +=" and a.regionCode like '"+order.getRegionCode().trim()+"'";
+				 }
+			     if(order.getCityCode()!=null && !"".equals(order.getCityCode())){
+						sqlWhere +=" and a.cityCode like '"+order.getCityCode().trim()+"'";
+				 }
+			     if(order.getProdName()!=null && !"".equals(order.getProdName())){
+						sqlWhere +=" and a.prodName like '"+order.getProdName().trim()+"'";
+				 }
+			     if(order.getBeginTime()!=null && !"".equals(order.getBeginTime())){
+						sqlWhere +=" and a.createdate >= str_to_date('"+order.getBeginTime().trim()+"','%Y-%m-%d %H:%i:%s') ";
+				 }
+			     if(order.getEndTime()!=null && !"".equals(order.getEndTime())){
+						sqlWhere +=" and a.createdate >= str_to_date('"+order.getEndTime().trim()+"','%Y-%m-%d %H:%i:%s') ";
+				 }
+			     if(order.getAgentName()!=null && !"".equals(order.getAgentName())){
+						sqlWhere +=" and b.agentName like '"+order.getAgentName().trim()+"'";
+				 }
+			     String orderBySqlString = " order by a.createdate desc ";
+			     sqlWhere += orderBySqlString + "  limit "+((pUtil.getCurPage()-1)*pUtil.getPageSize())+","+pUtil.getPageSize();
+			    
+			     orderList = (List<OrderVO>)dao.toList("order.getPageOrderList", sqlWhere);
+				
 			
 		if (logger.isDebugEnabled()) {
 			logger.debug("getOrderList(OrderVO) - end"); //$NON-NLS-1$
 		}
 		return orderList;
+	}
+	@Override
+	public int getOrderCounts(OrderVO order) throws Exception {
+		// TODO Auto-generated method stub
+				if (logger.isDebugEnabled()) {
+					logger.debug("getLogCounts(OrderVO order) - start"); //$NON-NLS-1$
+				}
+				int totalCount = 0;
+				
+				try {
+				     dao.startTransaction();				    
+				     
+				     totalCount = dao.getTotalPageCount("order.getOrderPageCounts", order);
+				     System.out.println("totalCount="+totalCount);
+					 
+				} catch (Exception e) {
+					dao.endTransaction();
+					e.printStackTrace();
+				}finally{
+					dao.commitTransation();
+				}
+				
+				
+				
+				if (logger.isDebugEnabled()) {
+					logger.debug("getLogCounts(OrderVO order) - end"); //$NON-NLS-1$
+				}
+				return totalCount;
 	}
 
 	@Override

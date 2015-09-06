@@ -92,6 +92,27 @@
 	<select id="getProdList" resultMap="prodRS" parameterClass="orderVO">
 		select productid as prodid,productName as prodname,price from b_product
 	</select>
+	<select id="getPageOrderList" resultMap="orderRS" parameterClass="string">
+		SELECT * FROM b_order a left join b_agent b on a.agentid=b.agentid
+		 WHERE 1=1 $sqlwhere$  
+	
+	</select>
+	
+	<select id="getOrderPageCounts" resultClass="int" parameterClass="orderVO">
+		SELECT count(1) FROM b_order a left join b_agent b on a.agentid=b.agentid
+		 WHERE 1=1 
+		<isParameterPresent>
+		<isPropertyAvailable property="regionCode"><isNotNull property="regionCode"><isNotEmpty prepend="AND" property="regionCode"> regionCode = #regionCode#  </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="cityCode"><isNotNull property="cityCode"><isNotEmpty prepend="AND" property="cityCode"> cityCode = #cityCode# </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="countyCode"><isNotNull property="countyCode"><isNotEmpty prepend="AND" property="countyCode"> countyCode = #countyCode# </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="prodName"><isNotNull property="prodName"><isNotEmpty prepend="AND" property="prodName"> prodName = #prodName# </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="prodID"><isNotNull property="prodID"><isNotEmpty prepend="AND" property="prodID"> prodID = #prodID# </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="beginTime"><isNotNull property="beginTime"><isNotEmpty prepend="AND" property="beginTime"> createdate >= str_to_date(#beginTime#,'%Y-%m-%d %H:%i:%s') </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="endTime"><isNotNull property="endTime"><isNotEmpty prepend="AND" property="endTime"> <![CDATA[ createdate <= str_to_date(#endTime#,'%Y-%m-%d %H:%i:%s') ]]> </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="agentName"><isNotNull property="agentName"><isNotEmpty prepend="AND" property="agentName"> b.agentName = #agentName# </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="agentID"><isNotNull property="agentID"><isNotEmpty prepend="AND" property="agentID"> a.agentID = #agentID# </isNotEmpty></isNotNull></isPropertyAvailable>
+		</isParameterPresent>
+	</select>
 </sqlMap>
 
 

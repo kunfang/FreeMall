@@ -7,4 +7,8 @@ import com.ftc.freemall.vo.User;
 public interface UserService {
 	
 	public List<User> checkLogin(User user) throws Exception; 
+	
+	public User toView(String empCde) throws Exception;
+		
+	public int doUpdate(User vo) throws Exception;
 }

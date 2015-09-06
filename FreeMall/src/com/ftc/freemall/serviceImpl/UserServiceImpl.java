@@ -38,5 +38,57 @@ public class UserServiceImpl implements UserService{
 		}
 		return list;
 	}
+	
+	/**
+	 * 通过用户代码获取用户信息
+	 * @param userid
+	 * @return
+	 * @throws Exception
+	 */
+	public User toView(String userid) throws Exception{
+		if (logger.isDebugEnabled()) {
+			logger.debug("toView(String) - start"); //$NON-NLS-1$
+		}
+
+		User user = new User();
+		if(userid == null || userid.trim().equals(""))
+		{
+			if (logger.isDebugEnabled()) {
+				logger.debug("toView(String) - end"); //$NON-NLS-1$
+			}
+			return null;
+		}
+
+		List<User> list = new ArrayList<User>();
+		list = dao.toList("user.getUserById",userid);
+		if(list != null && !list.isEmpty())
+		{
+			user = list.get(0);
+		}
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("toView(String) - end"); //$NON-NLS-1$
+		}
+		return user;
+	}
+	
+	/**
+	 * 修改用户信息
+	 * @param vo
+	 * @return
+	 * @throws Exception
+	 */
+	public int doUpdate(User vo) throws Exception
+	{
+		if (logger.isDebugEnabled()) {
+			logger.debug("doUpdate(User) - start"); //$NON-NLS-1$
+		}
+
+		int returnint = dao.doUpdate("user.doUpdate", vo);
+		if (logger.isDebugEnabled()) {
+			logger.debug("doUpdate(User) - end"); //$NON-NLS-1$
+		}
+		return returnint;
+	}
 
 }

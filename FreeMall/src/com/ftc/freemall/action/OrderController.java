@@ -3,6 +3,7 @@ package com.ftc.freemall.action;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ftc.foundation.view.PageUtil;
 import com.ftc.freemall.service.AgentService;
 import com.ftc.freemall.service.OrderService;
 import com.ftc.freemall.vo.AgentVO;
@@ -83,18 +85,23 @@ public class OrderController {
 	}
 	
 	@RequestMapping(params="method=getOrderList") 
-	public String getOrderList(OrderVO orderVO, Model model) {
+	public String getOrderList(OrderVO orderVO, Model model,PageUtil pUtil) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("getOrderList(OrderVO) - start"); //$NON-NLS-1$
 		}
 		
 		try {
-			List<OrderVO> orderList = orderService.getOrderList(orderVO);
+			int totalCount = orderService.getOrderCounts(orderVO);
+			List<OrderVO> orderList = orderService.getOrderList(orderVO,pUtil);
 			List<OrderVO> prodList = orderService.getProdList();
 			List<AgentVO> agentList = agentService.getAgentList(null);
+			
+			PageUtil pU = new PageUtil();
+			HashMap<String, Integer> pageList = pU.getPageList( pUtil.getCurPage(), totalCount,pUtil.getPageSize());
 			model.addAttribute("orderList",orderList);
 			model.addAttribute("agentList",agentList);
 			model.addAttribute("prodList",prodList);
+			model.addAttribute("pageList",pageList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -106,20 +113,23 @@ public class OrderController {
 	}
 	
 	@RequestMapping(params="method=getAgentOrderList") 
-	public String getAgentOrderList(OrderVO orderVO, Model model, int agentID) {
+	public String getAgentOrderList(OrderVO orderVO, Model model, int agentID,PageUtil pUtil) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("getAgentOrderList(OrderVO) - start"); //$NON-NLS-1$
 		}
 		
 		try {
 			orderVO.setAgentID(agentID);
-			
-			List<OrderVO> orderList = orderService.getOrderList(orderVO);
+			int totalCount = orderService.getOrderCounts(orderVO);
+			List<OrderVO> orderList = orderService.getOrderList(orderVO,pUtil);
+			PageUtil pU = new PageUtil();
+			HashMap<String, Integer> pageList = pU.getPageList( pUtil.getCurPage(), totalCount,pUtil.getPageSize());			
 			List<OrderVO> prodList = orderService.getProdList();
 			List<AgentVO> agentList = agentService.getAgentList(null);
 			model.addAttribute("orderList",orderList);
 			model.addAttribute("agentList",agentList);
 			model.addAttribute("prodList",prodList);
+			model.addAttribute("pageList",pageList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -131,7 +141,7 @@ public class OrderController {
 	}
 	
 	@RequestMapping(params="method=exportCSV")
-	public void exportOrderListCSV(OrderVO orderVO,HttpServletResponse response){
+	public void exportOrderListCSV(OrderVO orderVO,HttpServletResponse response,PageUtil pUtil){
 		if (logger.isDebugEnabled()) {
 			logger.debug("exportOrderListCSV(OrderVO) - start"); //$NON-NLS-1$
 		}
@@ -148,7 +158,7 @@ public class OrderController {
 	        
 	        out = response.getOutputStream();
 	        out.write(new byte[]{(byte)0xEF,(byte)0xBB,(byte)0xBF});
-			List<OrderVO> orderList = orderService.getOrderList(orderVO);
+			List<OrderVO> orderList = orderService.getOrderList(orderVO,pUtil);
 			
 			String header = "序号,接受人姓名,省份,城市,县,地址,手机,提交时间,产品名称,代理";
 			header = "\"" + header.replaceAll(",", "\",\"") + "\"\r\n";
@@ -196,7 +206,7 @@ public class OrderController {
 	}
 	
 	@RequestMapping(params="method=exportAgentCSV")
-	public void exportAgentCSV(OrderVO orderVO,HttpServletResponse response){
+	public void exportAgentCSV(OrderVO orderVO,HttpServletResponse response,PageUtil pUtil){
 		if (logger.isDebugEnabled()) {
 			logger.debug("exportAgentCSV(OrderVO) - start"); //$NON-NLS-1$
 		}
@@ -213,7 +223,7 @@ public class OrderController {
 	        
 	        out = response.getOutputStream();
 	        out.write(new byte[]{(byte)0xEF,(byte)0xBB,(byte)0xBF});
-			List<OrderVO> orderList = orderService.getOrderList(orderVO);
+			List<OrderVO> orderList = orderService.getOrderList(orderVO,pUtil);
 			
 			String header = "序号,接受人姓名,省份,城市,县,提交时间,产品名称";
 			header = "\"" + header.replaceAll(",", "\",\"") + "\"\r\n";
