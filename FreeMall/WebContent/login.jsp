@@ -10,7 +10,7 @@
  		loginErrInfo = "";
  %>  
  <HEAD>
- <TITLE>代理商管理系统</TITLE>
+ <TITLE>零元汇合伙人管理系统</TITLE>
    <meta http-equiv=Content-Type content="text/html; charset=utf-8"/>
    <meta content="MSHTML 6.00.2800.1400" name=GENERATOR/>
 <style type="text/css">
