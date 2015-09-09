@@ -88,7 +88,7 @@ public class OrderServiceImpl implements OrderService {
 						sqlWhere +=" and a.createdate >= str_to_date('"+order.getBeginTime().trim()+"','%Y-%m-%d %H:%i:%s') ";
 				 }
 			     if(order.getEndTime()!=null && !"".equals(order.getEndTime())){
-						sqlWhere +=" and a.createdate >= str_to_date('"+order.getEndTime().trim()+"','%Y-%m-%d %H:%i:%s') ";
+						sqlWhere +=" and a.createdate <= str_to_date('"+order.getEndTime().trim()+"','%Y-%m-%d %H:%i:%s') ";
 				 }
 			     if(order.getAgentName()!=null && !"".equals(order.getAgentName())){
 						sqlWhere +=" and b.agentName like '"+order.getAgentName().trim()+"'";

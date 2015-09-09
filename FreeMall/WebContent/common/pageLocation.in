@@ -10,7 +10,6 @@
 				var curPage =document.myform.curPage.value;
 				var totalPage =document.myform.totalPage.value;
 				var gotoPage = document.myform.goto.value;
-				var size = document.myform.customersize.value;
 				var paramPage;
 				if(obj=='first'){
 					paramPage=1;			
@@ -39,21 +38,23 @@
 					}else{
 						paramPage = gotoPage;
 					}	
-				}
-				if(size < 1 ){
-					alert("每页显示条数不能小于1条");
-					return;
-				}				
-				document.myform.pageSize.value=size;
+				}		
+
 				document.myform.curPage.value=paramPage;
 				toSearch('search');
+			}
+			function set_pageSize(obj){
+				if(obj.value < 1 ){
+					alert("每页显示条数不能小于1条");
+					return;
+				}
 			}
 		</script>
 
 <div id="pagediv" style="width:980px; height:50px; margin:0px auto;text-align:center;margin-top:10px" align="center">
 					 <input type="hidden" name="curPage" value="${pageList.curPage}" />
 					 <input type="hidden" name="totalPage" value="${pageList.totalPage}" />
-					 <input type="hidden" name="pageSize" value="${pageList.totalPage}" />
+				<!--	 <input type="hidden" name="pageSize" value="${pageList.pageSize}" />-->
 					 <ul>
 					    <li><a href="javascript:page_location('first');" style="border:0px;">首页</a></li>
 					    <li><a href="javascript:page_location('pre');" style="border:0px;">上页</a></li>
@@ -62,7 +63,7 @@
 					    <li style="float:left; border:0px solid #5d9cdf; height:22px;width:50px;padding-top:0px;margin:0px 5px;"><input type="text" name="goto" style="width:40px;"></li>
 					    <li><a href="javascript:page_location('goto');" style="border:0px;">跳转</a></li>
 					    <li class="pageinfo" style="width:80px;">第${pageList.curPage}页</li>
-						<li class="pageinfo" style="width:120px;">每页显示&nbsp;<input type="text" name="customersize" style="width:38px;" value="${pageList.pageSize}">&nbsp;条</li>
+						<li class="pageinfo" style="width:120px;">每页显示&nbsp;<input type="text" name="pageSize" onBlur="set_pageSize(this)" style="width:38px;" value="${pageList.pageSize}">&nbsp;条</li>
 						<li class="pageinfo" style="width:100px;">共${pageList.totalPage}页</li>
   					 </ul>
 </div>
