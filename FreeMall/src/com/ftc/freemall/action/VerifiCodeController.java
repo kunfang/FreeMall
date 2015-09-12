@@ -50,7 +50,7 @@ public class VerifiCodeController {
 		}
 		
 		PrintWriter write = null;
-		try {
+		try { 
 			/*if ("000000".equals(statusCode)) {
 				VerifiCodeVO objVO = new VerifiCodeVO();
 				objVO.setPhone(receiverMobile);
