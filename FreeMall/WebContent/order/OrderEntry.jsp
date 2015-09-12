@@ -121,6 +121,7 @@ $(function(){
 	</form>
 </body>
 <script type="text/javascript">
+	var verifycode;
 	function getVerifiCode() {
 		var b=document.getElementById("receiverMobile").value;
 		if(b==null||b==""){H5Alert("请填写手机号码");return false}
@@ -132,7 +133,7 @@ $(function(){
 			data: '',
 			success: function(msg){
 				if (msg=='000000') {
-					var count = 60;
+					var count = 120;
 					var countdown = setInterval(CountDown, 1000);
 					function CountDown() {
 	                    $("#btn").attr("disabled", true);
