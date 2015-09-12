@@ -33,7 +33,7 @@ public class VerifiCodeController {
 	public void setVerifiCodeService(VerifiCodeService verifiCodeService) {
 		this.verifiCodeService = verifiCodeService;
 	}
-
+  
 	@RequestMapping(params="method=sendCode")
 	public void sendVerifiCode(@RequestParam(value="receiverMobile",required=true) String receiverMobile,Model model,HttpServletResponse response, HttpSession session){
 		CCPRestSmsSDK sendAPI = VerifiCode.getInstance();
