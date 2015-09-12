@@ -29,8 +29,8 @@
 	window._bd_share_config = {
 		common : {
 			bdText : '蔷薇五件套',	
-			bdDesc : '测试',	
-			bdUrl : 'http://www.ft-tech.cn/lingyh/item3.html', 	
+			bdDesc : '',	
+			bdUrl : 'http://www.ft-tech.cn/lingyuanhui/item3.html?prodid=3&agentid=<%=session.getAttribute("userId")%>', 	
 			bdPic : '<%=path %>/images/qw1.png'
 		},
 		share : [{
@@ -73,7 +73,7 @@
 								<td><img width="120" height="120" src="<%=path %>/images/qw1.png"></td>
 								<td>蔷薇5件套</td>
 								<td>
-									<input type="text" value="http://www.ft-tech.cn/lingyh/item3.html?prodid=3&agentid=<%=session.getAttribute("userId")%>" style="width:420px;" readonly="readonly">
+									<input type="text" value="http://www.ft-tech.cn/lingyuanhui/item3.html?prodid=3&agentid=<%=session.getAttribute("userId")%>" style="width:420px;" readonly="readonly">
 								</td>
 								<td>
 									<div class="bdsharebuttonbox" data-tag="share_1">
