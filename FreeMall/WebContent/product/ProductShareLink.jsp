@@ -17,9 +17,8 @@
 	<script language="javascript" type="text/javascript" src="<%=path%>/datePicker/WdatePicker.js"></script>
 	
 	<link href="<%=path %>/source/editAddress.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="<%=path %>/source/editAddress.js" charset="utf-8"></script>
-<script type="text/javascript" src="<%=path %>/source/jquery.js" charset="utf-8"></script>
-<script type="text/javascript" src="<%=path %>/source/jquery.cityselect.js" charset="utf-8"></script>
+	<script type="text/javascript" src="<%=path %>/source/editAddress.js" charset="utf-8"></script>
+	<script type="text/javascript" src="<%=path %>/source/jquery.js" charset="utf-8"></script>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">
@@ -28,9 +27,9 @@
  <script>
 	window._bd_share_config = {
 		common : {
-			bdText : '蔷薇五件套',	
-			bdDesc : '',	
-			bdUrl : 'http://www.ft-tech.cn/lingyuanhui/item3.html?prodid=3&agentid=<%=session.getAttribute("userId")%>', 	
+			bdText : '百年蔷薇五件套',	
+			bdDesc : '',
+			bdUrl : '<%=basePath %>lingyh/Item3.jsp?prodid=3&price=23&prodname=百年蔷薇五件套&agentid=<%=session.getAttribute("userId")%>', 	
 			bdPic : '<%=path %>/images/qw1.png'
 		},
 		share : [{
@@ -41,15 +40,20 @@
 			viewPos : 'top',
 			viewColor : 'black',
 			viewSize : '32',
-			viewList : ['weixin','sqq','qzone']
+			viewList : ['weixin','sqq','qzone','tsina']
+		}],
+		selectShare : [{
+			"bdselectMiniList" : ['weixin','sqq','qzone','tsina']
 		}]
 	}
 	with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+	
 </script>
-  </head>
+</head>
   
   <body style="width:100%; margin:0px; padding:0px; font-size:13px;text-align:center">
   <%@ include file="/menu.jsp" %>
+  <form name="myform">
 		    <div class="box">
 			<div class="box_top"></div>
 			<div class="box_center">				
@@ -62,24 +66,38 @@
 								<th nowrap scope="col" height="24" >
 									<div orderBy="true">产品名称</div>
 								</th>
+								<!-- 
 								<th scope="col" height="24" nowrap id=".truename">
 									<div orderBy="true">分享链接</div>
 								</th>
+								 -->
 								<th scope="col" height="24" nowrap id=".orgid">
 									<div orderBy="true">分享到</div>
 								</th>								
 							</tr>
 							<tr>
 								<td><img width="120" height="120" src="<%=path %>/images/qw1.png"></td>
-								<td>蔷薇5件套</td>
 								<td>
-									<input type="text" value="http://www.ft-tech.cn/lingyuanhui/item3.html?prodid=3&agentid=<%=session.getAttribute("userId")%>" style="width:420px;" readonly="readonly">
+									百年蔷薇五件套
 								</td>
+								<!-- 
+								<td>
+									<input id="copy" type="button" data-clipboard-target="url" value="复制">
+									<!-- <input type="button" id="copyurl" onClick="copyUrl()" name="anniu2"  value="复制分享链接"> 
+									<input type="hidden" id="url" name="url" value="<%=basePath %>lingyh/Item3.jsp?prodid=3&price=23&prodname=百年蔷薇五件套&agentid=<%=session.getAttribute("userId")%>">
+									<!-- <input type="text" value="<%=basePath %>lingyh/Item3.jsp?prodid=3&price=23&prodname=百年蔷薇五件套&agentid=<%=session.getAttribute("userId")%>" style="width:420px;" readonly="readonly"> 
+								</td>
+								 -->
 								<td>
 									<div class="bdsharebuttonbox" data-tag="share_1">
+										<a class="bds_mshare" data-cmd="mshare"></a>
 										<a class="bds_weixin" data-cmd="weixin"></a>
 										<a class="bds_sqq" data-cmd="sqq"></a>
-										<!--<a class="bds_qzone" data-cmd="qzone" href="#"></a> -->
+										<a class="bds_qzone" data-cmd="qzone" href="#"></a>
+										<a class="bds_tsina" data-cmd="tsina"></a>
+										<a class="bds_baidu" data-cmd="baidu"></a>										
+										<a class="bds_more" data-cmd="more">更多</a>
+										<a class="bds_count" data-cmd="count"></a>
 									</div>	
 								</td>	
 							</tr>
@@ -87,6 +105,7 @@
 				</div>
 					
 			</div>
+			</form>
 			<div class="box_bottom"></div>
 			</div>
 	</body>
