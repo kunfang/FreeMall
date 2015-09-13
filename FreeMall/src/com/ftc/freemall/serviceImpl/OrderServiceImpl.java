@@ -16,6 +16,7 @@ import com.ftc.foundation.dao.DefaultDAO;
 import com.ftc.foundation.view.PageUtil;
 import com.ftc.freemall.service.OrderService;
 import com.ftc.freemall.vo.OrderVO;
+import com.ftc.freemall.vo.SalesStatisVO;
 
 @Service("orderService") 
 public class OrderServiceImpl implements OrderService {
@@ -177,6 +178,30 @@ public class OrderServiceImpl implements OrderService {
 			logger.debug("getProdList() - end"); //$NON-NLS-1$
 		}
 		return prodList;
+	}
+
+	@Override
+	public List<SalesStatisVO> getSalesStatis(int agentid) throws Exception {
+		if (logger.isDebugEnabled()) {
+			logger.debug("getSalesStatis(agentid) - start"); //$NON-NLS-1$
+		}
+		List<SalesStatisVO> statisList = null;
+		try {
+			OrderVO order = new OrderVO();
+			order.setAgentID(agentid);
+		    dao.startTransaction();
+		    statisList = (List<SalesStatisVO>)dao.toList("order.getSalesStatis",order);
+			 
+		} catch (Exception e) {
+			dao.endTransaction();
+			e.printStackTrace();
+		}finally{
+			dao.commitTransation();
+		}
+		if (logger.isDebugEnabled()) {
+			logger.debug("getSalesStatis(agentid) - end"); //$NON-NLS-1$
+		}
+		return statisList;
 	}
 
 }

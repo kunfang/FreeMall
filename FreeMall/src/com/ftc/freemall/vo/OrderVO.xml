@@ -3,6 +3,7 @@
 
 <sqlMap namespace="order">
 	<typeAlias alias="orderVO" type="com.ftc.freemall.vo.OrderVO" />
+	<typeAlias alias="SalesStatisVO" type="com.ftc.freemall.vo.SalesStatisVO" />
 
 	<cacheModel id="oneDayUrgerType" type="LRU">
 		<flushInterval hours="24" />
@@ -33,7 +34,10 @@
 		<result property="prodName" column="prodname" />
 		<result property="price" column="price" />
 	</resultMap>
-	
+	<resultMap id="statisRS" class="SalesStatisVO">
+		<result property="day" column="day" />
+		<result property="num" column="num" />
+	</resultMap>
 	<insert id="doInsert" parameterClass="orderVO">
 		INSERT INTO b_order<dynamic><isParameterPresent>(receiverMobile,createDate
 		<isPropertyAvailable property="receiverName"><isNotNull prepend="," property="receiverName">receiverName</isNotNull></isPropertyAvailable>
@@ -96,6 +100,17 @@
 		SELECT * FROM b_order a left join b_agent b on a.agentid=b.agentid
 		 WHERE 1=1 $sqlwhere$  
 	
+	</select>
+	
+	<select id="getSalesStatis" resultMap="statisRS" parameterClass="orderVO">
+		select DATE_FORMAT(a.newdate,'%y%m%d') as day, ifnull( b.counts,0) as num from 
+		(select DATE_ADD(SYSDATE(),INTERVAL -daynum DAY) as newdate from b_daycycle) as a
+		left join 
+		(select createdate,agentid,count(1) as counts from b_order b group by createdate,agentid )  as b on  DATE_FORMAT(b.createdate,'%m-%d-%Y')=DATE_FORMAT(a.newdate,'%m-%d-%Y')
+		<isParameterPresent>
+		<isPropertyAvailable property="agentID"><isNotNull property="agentID"><isNotEmpty prepend="AND" property="agentID"> b.agentID = #agentID# </isNotEmpty></isNotNull></isPropertyAvailable>
+		</isParameterPresent> 
+		order by a.newdate asc   
 	</select>
 	
 	<select id="getOrderPageCounts" resultClass="int" parameterClass="orderVO">

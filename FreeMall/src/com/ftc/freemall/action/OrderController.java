@@ -1,24 +1,31 @@
 package com.ftc.freemall.action;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
+import net.sf.json.util.JSONUtils;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ftc.foundation.view.PageUtil;
 import com.ftc.freemall.service.AgentService;
 import com.ftc.freemall.service.OrderService;
 import com.ftc.freemall.vo.AgentVO;
 import com.ftc.freemall.vo.OrderVO;
+import com.ftc.freemall.vo.SalesStatisVO;
 
 @Controller("orderController")
 @RequestMapping("/order.do")
@@ -290,5 +297,40 @@ public class OrderController {
 			logger.debug("getAgentRanking(model) - end"); //$NON-NLS-1$
 		}
 		return "order/AgentRanking";
+	}
+	
+	@RequestMapping(params="method=getSalesStatis")
+	public void getSalesStatis(HttpServletResponse response,@RequestParam(value="userid",required=true) int userid){
+		if (logger.isDebugEnabled()) {
+			logger.debug("getSalesStatis(response,userid) - start"); //$NON-NLS-1$
+		}
+		
+		try {
+			List<SalesStatisVO> result = orderService.getSalesStatis(userid);
+			
+			int size = result.size();
+			String[] categories = new String[size];
+			Integer[] values = new Integer[size];
+			
+			for (int i=0;i<size;i++) {
+				SalesStatisVO sales = result.get(i);
+				categories[i] = sales.getDay();
+				values[i] = sales.getNum();
+			}
+			
+			Map<String, Object> json = new HashMap<String, Object>();  
+			json.put("categories", categories);  
+			json.put("values", values);
+			
+			System.out.println(JSONObject.fromObject(json));
+			response.getWriter().print(JSONObject.fromObject(json));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if (logger.isDebugEnabled()) {
+			logger.debug("getSalesStatis(response,userid) - end"); //$NON-NLS-1$
+		}
 	}
 }
