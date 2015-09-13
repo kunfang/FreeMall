@@ -10,6 +10,8 @@ public class User {
 	private int appearance;  //用户头像
 	private Date timeStamp;  //创建日期
 	private int isClient;    //0表示手机端,1代表终端
+	private String email;    //邮箱地址
+	private String bankNo;   //卡号
 	
 	public int getUserid() {
 		return userid;
@@ -53,7 +55,17 @@ public class User {
 	public void setIsClient(int isClient) {
 		this.isClient = isClient;
 	}
-	
-	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getBankNo() {
+		return bankNo;
+	}
+	public void setBankNo(String bankNo) {
+		this.bankNo = bankNo;
+	}
 
 }

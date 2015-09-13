@@ -108,6 +108,7 @@
             </div>
             
             <div class="loginBoxButtons">
+                <a href="<%=context%>/userLoginlist.do?method=registerUser">用户注册</a>
                 <button type="submit" class="loginBtn" data-toggle="button">登录</button>
             </div>
         </div>
