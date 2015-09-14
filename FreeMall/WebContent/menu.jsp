@@ -45,11 +45,11 @@
 		</div><!-- /.container-fluid -->
 	</nav>
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
-		<!-- <form role="search"> -->
+		 <form name="searchs" role="search"> 
 			<div class="form-group">
 				菜单导航
 			</div>
-		<!--</form>-->
+		</form>
 		<ul class="nav menu">
 			<%
 			for(int i=0; i<assessSysMenuList.size(); i++){
