@@ -75,6 +75,7 @@ public class UserController {
 			request.getSession().setAttribute("menuList", list);
 			request.getSession().setAttribute("userId", listAllUser.get(0).getUserid());
 			request.getSession().setAttribute("trueName", listAllUser.get(0).getUsername());
+			request.getSession().setAttribute("userInfo", listAllUser.get(0));
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("errorInfo","Login Error!!!");

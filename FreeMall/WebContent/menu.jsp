@@ -45,11 +45,11 @@
 		</div><!-- /.container-fluid -->
 	</nav>
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
-		<!-- <form role="search"> -->
+		<form role="search">
 			<div class="form-group">
 				菜单导航
 			</div>
-		<!--</form>-->
+		</form>
 		<ul class="nav menu">
 			<%
 			for(int i=0; i<assessSysMenuList.size(); i++){
@@ -63,7 +63,7 @@
 			<li><a href="appeal.html"><span class="glyphicon glyphicon-earphone"></span>申诉</a></li>
 			<li><a href="user.html"><span class="glyphicon glyphicon-user"></span>个人设置</a></li> -->
 			<li>
-				<a href="<%=context%><%=assessSysMenuVO.getMenuUrl()%>&agentID=<%=session.getAttribute("userId") %>&menuNme=<%=assessSysMenuVO.getMenuNme() %>&menuId=<%=assessSysMenuVO.getMenuId() %>"><span class="glyphicon glyphicon-user<%=assessSysMenuVO.getClassName() %>"></span><%=URLDecoder.decode(assessSysMenuVO.getMenuNme(),"UTF-8") %></a>
+				<a href="<%=context%><%=assessSysMenuVO.getMenuUrl()%>&agentID=<%=session.getAttribute("userId") %>&menuNme=<%=assessSysMenuVO.getMenuNme() %>&menuId=<%=assessSysMenuVO.getMenuId() %>"><span class="<%=assessSysMenuVO.getClassName() %>"></span><%=URLDecoder.decode(assessSysMenuVO.getMenuNme(),"UTF-8") %></a>
 			</li>
 			<%
 			}

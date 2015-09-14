@@ -13,7 +13,7 @@
 	//response.sendRedirect(context + "/login.do?mhd=doLogoutCsseSession");
 %>
 	<script language="javascript"> 
-		//top.location.href = "<%=context%>/login.do?mhd=doLogoutCsseSession";
+		top.location.href = "<%=context%>/login.jsp";
 	</script>
 <%
 	} else {
