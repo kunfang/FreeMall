@@ -13,7 +13,6 @@ required:必选项
 ------------------------------ */
 (function($){
 	$.fn.citySelect=function(settings){
-		
 		if(this.length<1){return;};
 		// 默认值
 		settings=$.extend({
@@ -28,7 +27,6 @@ required:必选项
 		var prov_obj=$("#provinceId");
 		var city_obj=$('#cityId');
 		var dist_obj=$('#countyId');
-		
 		
 		
 		var select_prehtml=(settings.required) ? "" : "<option value=''>请选择</option>";

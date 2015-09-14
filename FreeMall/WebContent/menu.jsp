@@ -35,7 +35,7 @@
 					<li class="dropdown pull-right">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span><%=session.getAttribute("trueName")%><span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="<%=context%>/userLoginlist.do?method=pwd&isnew=Y"><span class="glyphicon glyphicon-user"></span>修改密码</a></li>
+							<!-- <li><a href="<%=context%>/userLoginlist.do?method=pwd&isnew=Y"><span class="glyphicon glyphicon-user"></span>修改密码</a></li> -->
 							<!-- <li><a href="user.html"><span class="glyphicon glyphicon-cog"></span>设置</a></li> -->
 							<li><a href="<%=context%>/userLoginlist.do?method=logout"><span class="glyphicon glyphicon-log-out"></span>登出</a></li>
 						</ul>
@@ -45,11 +45,11 @@
 		</div><!-- /.container-fluid -->
 	</nav>
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
-		<form role="search">
+		<!-- <form role="search"> -->
 			<div class="form-group">
 				菜单导航
 			</div>
-		</form>
+		<!--</form>-->
 		<ul class="nav menu">
 			<%
 			for(int i=0; i<assessSysMenuList.size(); i++){

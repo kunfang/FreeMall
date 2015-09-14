@@ -20,18 +20,10 @@
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
     
     
-    <bean id="viewResolver" class="com.ftc.foundation.view.MultiViewResover">
-    	<property name="resolvers">
-    		<map>
-    			<entry key="jsp">
-    				<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-    					<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-    					<property name="prefix" value="/"></property>
-    					<property name="suffix" value=".jsp"></property>
-    				</bean>
-    			</entry>
-    		</map>
-    	</property>
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" 
+        p:prefix="/" p:suffix=".jsp">
+         <!-- 如果使用jstl的话，配置下面的属性 -->
+    	<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />    
     </bean>
     
 </beans>
