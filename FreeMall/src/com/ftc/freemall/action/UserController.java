@@ -86,7 +86,7 @@ public class UserController {
 		}
 
 		
-		return "index";  
+		return "redirect:order.do?method=getAgentRanking";  
 	}
 	
 	/**

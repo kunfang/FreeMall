@@ -11,7 +11,7 @@
   <head>
     <base href="<%=basePath%>">
     
-    <title>产品链接领取</title>
+    <title>申领推广链接</title>
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet">
 	<link href="<%=path %>/css/datepicker3.css" rel="stylesheet">
 	<link href="<%=path %>/css/styles.css" rel="stylesheet">
@@ -44,7 +44,7 @@
 </head>
   
   <body>
-
+	<%@ include file="/menu.jsp" %>
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
 		<div class="row">
 			<ol class="breadcrumb">

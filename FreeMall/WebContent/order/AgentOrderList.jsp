@@ -12,11 +12,12 @@
     <base href="<%=basePath%>">
     
     <title>订单列表</title>
+    <link href="<%=path %>/source/editAddress.css" rel="stylesheet" type="text/css">
 	<link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet">
 	<link href="<%=path %>/css/datepicker3.css" rel="stylesheet">
 	<link href="<%=path %>/css/styles.css" rel="stylesheet">
 	<link href="<%=path %>/css/index.css" rel="stylesheet">
-	<link href="<%=path %>/source/editAddress.css" rel="stylesheet" type="text/css">
+	
 	<script type="text/javascript" src="<%=path %>/source/editAddress.js" charset="utf-8"></script>
 	<!-- <script type="text/javascript" src="<%=path %>/source/jquery.js" charset="utf-8"></script> -->
 	
@@ -75,10 +76,11 @@
   </head>
   
   <body >
+  <%@ include file="/menu.jsp" %>
   <form:form commandName="orderVO" method="post" action="order.do" name="myform">
 		<input type="hidden" name="method" value="getAgentOrderList" />
 		<form:hidden path="agentID" id="agentID"/>
-			
+	
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<div class="row">
 			<ol class="breadcrumb">
