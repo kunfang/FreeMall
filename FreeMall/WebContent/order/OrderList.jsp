@@ -6,20 +6,33 @@
 <% String path = request.getContextPath();
    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
   <head>
     <base href="<%=basePath%>">
     
     <title>订单列表</title>
-    <link href="<%=path%>/css/page2.css" rel="stylesheet" type="text/css">
-	<link href="<%=path%>/css/ddsmoothmenu.css" type="text/css" rel="stylesheet">
-	<script language="javascript" type="text/javascript" src="<%=path%>/datePicker/WdatePicker.js"></script>
+
 	
+	<link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet">
+	<link href="<%=path %>/css/datepicker3.css" rel="stylesheet">
+	<link href="<%=path %>/css/styles.css" rel="stylesheet">
+	<link href="<%=path %>/css/index.css" rel="stylesheet">
 	<link href="<%=path %>/source/editAddress.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="<%=path %>/source/editAddress.js" charset="utf-8"></script>
-<script type="text/javascript" src="<%=path %>/source/jquery.js" charset="utf-8"></script>
-<script type="text/javascript" src="<%=path %>/source/jquery.cityselect.js" charset="utf-8"></script>
+	<script type="text/javascript" src="<%=path %>/source/editAddress.js" charset="utf-8"></script>
+	<!-- <script type="text/javascript" src="<%=path %>/source/jquery.js" charset="utf-8"></script> -->
+	
+	<script language="javascript" type="text/javascript" src="<%=path%>/js/datePicker/WdatePicker.js"></script>
+	
+	<script src="<%=path %>/js/jquery-1.11.1.min.js"></script>
+	<script src="<%=path %>/js/bootstrap.min.js"></script>
+	<%-- <script src="<%=path %>/js/chart.min.js"></script>
+	<script src="<%=path %>/js/chart-data.js"></script>
+	<script src="<%=path %>/js/easypiechart.js"></script>
+	<script src="<%=path %>/js/easypiechart-data.js"></script>
+	<script src="<%=path %>/js/bootstrap-datepicker.js"></script>
+	<script src="<%=path %>/js/bootstrap-table.js"></script> --%>
+	<script type="text/javascript" src="<%=path %>/source/jquery.cityselect.js" charset="utf-8"></script>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">
@@ -63,91 +76,83 @@
 	</script>
   </head>
   
-  <body style="width:100%; margin:0px; padding:0px; font-size:13px;text-align:center">
-		    <div class="box">
-			<div class="box_top"></div>
-			<div class="box_center">	
-		<form:form commandName="orderVO" method="post" action="order.do" name="myform">
-			<input type="hidden" name="method" value="getOrderList" />
-					<div id="citydiv">
-						<table class="table1" >
-							<tr class="td1">
-								<td align="right" class="mctitle">省份:</td>
-								<td align="left" class="mctitle"><select id="provinceId" class="province_select"></select>
+  <body>
+  <form:form commandName="orderVO" method="post" action="order.do" name="myform">
+  <input type="hidden" name="method" value="getOrderList" />  
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+		<div class="row">
+			<ol class="breadcrumb">
+				<li class="active">订单查询</li>
+			</ol>
+		</div><!--/.row-->
+        <br>
+		<div id="citydiv">
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>省份</label>
+								<select id="provinceId" class="form-control"></select>
 								<form:hidden path="regionCode" id="regionCode"/>
-								</td>
-								<td align="right" class="mctitle">城市:</td>
-								<td align="left" class="mctitle"><select id="cityId" disabled="disabled"></select>
-								<form:hidden path="cityCode" id="cityCode"/>
-								</td>
-								<%-- <td align="right" class="mctitle">产品类型:</td>
-								<td align="left" class="mctitle"><form:select path="categoryId" items="${cateList}" itemValue="categoryId" itemLabel="categoryName" /></td> --%>
-							</tr>
-							<tr class="td1">
-								<td align="right" class="mctitle">提交时间段:</td>
-								<td align="left" class="mctitle"><form:input path="beginTime" class="Wdate" onClick="javacript:WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});" size="30"/>---<form:input path="endTime" class="Wdate" onClick="javacript:WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/></td>
-							</tr>
-							<tr class="td1">
-								<td align="right" class="mctitle">产品名称:</td>
-								<td align="left" class="mctitle">
-								<form:select path="prodName">
+							</div>
+							<div class="form-group">
+								<label>产品</label>
+								<form:select class="form-control" path="prodName">
 										<option value="">请选择产品</option>
 										<form:options items="${prodList}" itemValue="prodName" itemLabel="prodName"/>
-									</form:select>
-								
-								</td>
-								<td align="right" class="mctitle">代理:</td>
-								<td align="left" class="mctitle">
-									<form:select path="agentName">
+								</form:select>
+							</div>
+							<div class="form-group">
+								<label>提交时间段</label>
+								<form:input path="beginTime" class="Wdate" onClick="javacript:WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});" size="30"/>---<form:input path="endTime" class="Wdate"  onClick="javacript:WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});"/>
+							</div>							
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>城市</label>
+								<form:hidden path="cityCode" id="cityCode"/>
+								<select class="form-control" id="cityId" disabled="disabled"></select>								
+							</div>
+							<div class="form-group">
+								<label>代理</label>
+								<form:select class="form-control"  path="agentName">
 										<option value="">请选择代理</option>
 										<form:options items="${agentList}" itemValue="agentName" itemLabel="agentName"/>
-									</form:select>
-								</td>
-							</tr>
-						</table>
-					</div>
-						&nbsp;
-					<div align="center">
-						<input type="button" class="buttonClass" value="查询(F)" onclick="toSearch('search','go')"/>&nbsp;&nbsp;
-						<input type="button" class="buttonClass" value="导出" onclick="exportCSV()" />&nbsp;&nbsp;
-					</div>
-					<div style="width:95%; margin:0px auto;">
+								</form:select>
+							</div>
+									
+						</div>
+		</div>			
+		<div class="row" >
+			<div class="col-lg-12">
+				<div class="panel panel-default">
 					
-							<table class="table3" style="font-size:13px;">
-							<tr>
-								<th nowrap scope="col" height="24" >
-									<div orderBy="true">序号</div>
-								</th>
-								<th nowrap scope="col" height="24" >
-									<div orderBy="true">接收人名称</div>
-								</th>
-								<th scope="col" height="24" nowrap id=".truename">
-									<div orderBy="true">省份</div>
-								</th>
-								<th scope="col" height="24" nowrap id=".orgid">
-									<div orderBy="true">城市</div>
-								</th>
-								<th scope="col" height="24" nowrap id="">
-									<div orderBy="true">县</div>
-								</th>
-							    <th scope="col" height="24" nowrap id="">
-									<div orderBy="true">地址</div>
-								</th>
-								
-								<th scope="col" height="24" nowrap id=".orgid">
-									<div orderBy="true">手机</div>
-								</th>
-								<th scope="col" height="24" nowrapid=".orgid">
-									<div orderBy="true">提交时间</div>
-								</th>
-								<th scope="col" height="24" nowrapid=".orgid">
-									<div orderBy="true">产品名称</div>
-								</th>
-								<th scope="col" height="24" nowrap>
-									<div orderBy="true">代理</div>
-								</th>
-							</tr>
-							
+					<div class="panel-body" style=" overflow:scroll; width:1400px;">
+					<div class="bootstrap-table">
+					<div class="fixed-table-toolbar">
+						<div class="search" style="margin-left:480px;">
+							<input type="button" class="btn btn-primary" value="查询(F)" onclick="toSearch('search','go')"/>&nbsp;&nbsp;
+							<input type="button" class="btn btn-primary" value="导出" onclick="exportCSV()" />&nbsp;&nbsp;
+						</div>		
+					</div>
+					<div class="fixed-table-container">
+						<div class="fixed-table-header"><table></table></div>
+						<div class="fixed-table-body">
+							<table data-toggle="table" class="table table-hover" >
+						    <thead>
+						    <tr>
+						        <th style="border-right:1px solid #eee" >序号</th>
+						        <th style="border-right:1px solid #eee">接收人名称 </th>
+						        <th style="border-right:1px solid #eee">省份</th>
+						        <th style="border-right:1px solid #eee">城市</th>
+								<th style="border-right:1px solid #eee">区县</th>
+								<th style="border-right:1px solid #eee">地址</th>
+								<th style="border-right:1px solid #eee">手机</th>
+								<th style="border-right:1px solid #eee">提交时间</th>
+								<th style="border-right:1px solid #eee">产品名称</th>
+								<th style="border-right:1px solid #eee">代理</th>
+						    </tr>							
+						    </thead>
+							<tbody>
 							<%
 								int i = 0;
 								String trclass = "td2";
@@ -160,70 +165,74 @@
 											else
 										trclass = "";
 								%>
-								
-								<tr
-										onmouseover="javascript:changeBgColorOnMouseOver(this);"
-										onmouseout="javascript:changeBgColorOnMouseOut(this);" >
-									<td>
+								<tr data-index="<%=i%>">
+									<td style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif;font-size: 14px;">
 										&nbsp;
 										  ${orderList.orderID}
 										&nbsp;
 									</td>
-									<td>
+									<td style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif;font-size: 14px;">
 										&nbsp;
 										  ${orderList.receiverName}
 										&nbsp;
 									</td>
-									<td height="14">
+									<td style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif;font-size: 14px;">
 										&nbsp;
 										${orderList.regionCode}
+										&nbsp;
 									</td>
-									<td height="14">
+									<td style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif;font-size: 14px;">
 										&nbsp;
 										${orderList.cityCode}
 										&nbsp;
 									</td>
-									
-									<td height="14">
+									<td style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif;font-size: 14px;">
 										&nbsp;
 										${orderList.countyCode}
 										&nbsp;
 									</td>
-									<td height="14">
+									<td style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif;font-size: 14px;">
 										&nbsp;
 										${orderList.address}
 										&nbsp;
 									</td>
-									<td height="14">
+									<td style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif;font-size: 14px;">
 										&nbsp;
 										${orderList.receiverMobile}
 										&nbsp;
 									</td>
-									<td height="14">
+									<td style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif;font-size: 14px;">
 										&nbsp;
 										<fmt:formatDate value="${orderList.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 										&nbsp;
 									</td>
-									<td height="14">
+									<td style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif;font-size: 14px;">
 										&nbsp;
 										${orderList.prodName}
 										&nbsp;
 									</td>
-									<td height="14">
-									    &nbsp;
+									<td style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif;font-size: 14px;">
+										&nbsp;
 										${orderList.agentName}
 										&nbsp;
 									</td>
 								</tr>
-							</c1:forEach>
+								</c1:forEach>
+							</tbody>
 						</table>
+						</div><div class="fixed-table-pagination"></div></div></div>
+						<%@ include file="/common/pageLocation.in" %>
 					</div>
-					 <div class="digg">
-                            <%@ include file="/common/pageLocation.in" %>
-                     </div>
-		      </form:form>
+					
+				</div>
 			</div>
-			<div class="box_bottom"></div>
-			</div>
-	</body>
+		</div><!--/.row-->	
+
+
+		
+	</div><!--/.main-->
+
+
+	 </form:form>	
+  </body>
 </html>

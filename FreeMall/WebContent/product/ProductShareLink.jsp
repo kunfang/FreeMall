@@ -6,7 +6,7 @@
 <% String path = request.getContextPath();
    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
 %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
   <head>
     <base href="<%=basePath%>">
@@ -44,48 +44,7 @@
 </head>
   
   <body>
-		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#"><span>零元汇</span>合作伙伴平台</a>
-				<ul class="user-menu">
-				<li class="dropdown pull-right">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span>方坤<span class="caret"></span></a>
-					<ul class="dropdown-menu" role="menu">
-						<li><a href="user.html"><span class="glyphicon glyphicon-user"></span>个人资料</a></li>
-						<li><a href="user.html"><span class="glyphicon glyphicon-cog"></span>设置</a></li>
-						<li><a href="index.html"><span class="glyphicon glyphicon-log-out"></span>登出</a></li>
-					</ul>
-				</li>
-			</ul>
-			</div>
-							
-		</div><!-- /.container-fluid -->
-	</nav>
-		
-	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
-		<form role="search">
-			<div class="form-group">
-				菜单导航
-			</div>
-		</form>
-		<ul class="nav menu">
-			<li><a href="ranking.html"><span class="glyphicon glyphicon-home"></span>首页</a></li>
-			<li><a href="order.html"><span class="glyphicon glyphicon-list-alt"></span>订单查询</a></li>
-			<li><a href="geturl.html"><span class="glyphicon glyphicon-share"></span>申领推广链接</a></li>
-			<li><a href="appeal.html"><span class="glyphicon glyphicon-earphone"></span>申诉</a></li>
-			<li><a href="user.html"><span class="glyphicon glyphicon-user"></span>个人设置</a></li>
-			<li role="presentation" class="divider"></li>
-		</ul>
-		<div class="attribution">copy right &copy;版权归零元汇所有</div>
-	</div><!--/.sidebar-->
-		
+
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
 		<div class="row">
 			<ol class="breadcrumb">
