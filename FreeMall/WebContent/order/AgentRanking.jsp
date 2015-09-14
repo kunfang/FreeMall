@@ -106,7 +106,6 @@
                 $.getJSON('<%=context%>/order.do?method=getSalesStatis&userid=<%=session.getAttribute("userId")%>', function (json) {
                     categories = json.categories;
                     values = json.values;
-                    alert(categories);
                 });
              	
              	
