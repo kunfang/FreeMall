@@ -30,7 +30,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#"><span>零元汇</span>合作伙伴平台</a>
+				<div class="navbar-brand"><span>零元汇</span>合伙人平台</div>
 				<ul class="user-menu">
 					<li class="dropdown pull-right">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span><%=session.getAttribute("trueName")%><span class="caret"></span></a>

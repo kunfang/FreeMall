@@ -92,8 +92,12 @@ public class OrderServiceImpl implements OrderService {
 						sqlWhere +=" and a.createdate <= str_to_date('"+order.getEndTime().trim()+"','%Y-%m-%d %H:%i:%s') ";
 				 }
 			     if(order.getAgentName()!=null && !"".equals(order.getAgentName())){
-						sqlWhere +=" and b.agentName like '"+order.getAgentName().trim()+"'";
+						sqlWhere +=" and b.username like '"+order.getAgentName().trim()+"'";
 				 }
+			     if(order.getAgentID()!=null || order.getAgentID().intValue() != 1){
+						sqlWhere +=" and b.userid = "+order.getAgentID();
+				 }
+			     
 			     String orderBySqlString = " order by a.createdate desc ";
 			     sqlWhere += orderBySqlString + "  limit "+((pUtil.getCurPage()-1)*pUtil.getPageSize())+","+pUtil.getPageSize();
 			    

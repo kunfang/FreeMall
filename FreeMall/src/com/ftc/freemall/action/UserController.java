@@ -233,6 +233,7 @@ public class UserController {
 				uservice.doInsert(user);
 				result="login";
 			}
+			request.getSession().setAttribute("loginErrInfo", "恭喜您注册成功，请登录");
 		}catch(Exception e){
 			e.printStackTrace();
 		}

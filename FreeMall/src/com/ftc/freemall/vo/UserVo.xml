@@ -30,6 +30,10 @@
 		select * from b_user  where isClient=1 and username=#username#
 	</select>
 	
+	<select id="getUserByMobile" resultMap="userRS" parameterClass="java.lang.String">
+		select * from b_user  where isClient=1 and mobile=#mobile#
+	</select>
+	
 	<delete id="doDelete" parameterClass="java.lang.String">
 		delete b_user where userid = #userid#
 	</delete>

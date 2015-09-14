@@ -74,7 +74,7 @@
 	</select>
 	
 	<select id="getOrderList" resultMap="orderRS" parameterClass="orderVO">
-		SELECT * FROM b_order a left join b_agent b on a.agentid=b.agentid
+		SELECT a.*,b.agentname as agentname FROM b_order a left join b_user b on a.agentid=b.userid
 		 WHERE 1=1 <isParameterPresent>
 		<isPropertyAvailable property="regionCode"><isNotNull property="regionCode"><isNotEmpty prepend="AND" property="regionCode"> regionCode = #regionCode#  </isNotEmpty></isNotNull></isPropertyAvailable>
 		<isPropertyAvailable property="cityCode"><isNotNull property="cityCode"><isNotEmpty prepend="AND" property="cityCode"> cityCode = #cityCode# </isNotEmpty></isNotNull></isPropertyAvailable>
@@ -83,21 +83,21 @@
 		<isPropertyAvailable property="prodID"><isNotNull property="prodID"><isNotEmpty prepend="AND" property="prodID"> prodID = #prodID# </isNotEmpty></isNotNull></isPropertyAvailable>
 		<isPropertyAvailable property="beginTime"><isNotNull property="beginTime"><isNotEmpty prepend="AND" property="beginTime"> createdate >= str_to_date(#beginTime#,'%Y-%m-%d %H:%i:%s') </isNotEmpty></isNotNull></isPropertyAvailable>
 		<isPropertyAvailable property="endTime"><isNotNull property="endTime"><isNotEmpty prepend="AND" property="endTime"> <![CDATA[ createdate <= str_to_date(#endTime#,'%Y-%m-%d %H:%i:%s') ]]> </isNotEmpty></isNotNull></isPropertyAvailable>
-		<isPropertyAvailable property="agentName"><isNotNull property="agentName"><isNotEmpty prepend="AND" property="agentName"> b.agentName = #agentName# </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="agentName"><isNotNull property="agentName"><isNotEmpty prepend="AND" property="agentName"> b.username = #agentName# </isNotEmpty></isNotNull></isPropertyAvailable>
 		<isPropertyAvailable property="agentID"><isNotNull property="agentID"><isNotEmpty prepend="AND" property="agentID"> a.agentID = #agentID# </isNotEmpty></isNotNull></isPropertyAvailable>
 		</isParameterPresent>
 		order by createdate desc
 	</select>
 	
 	<select id="getAgentRanking" resultMap="rankingRS" parameterClass="orderVO">
-		<![CDATA[select b.agentName,count(1) as agentID from b_order a,b_agent b where a.agentid <> 1 and a.agentid=b.agentid group by a.agentid order by count(1) desc LIMIT 0,10]]>
+		<![CDATA[select b.agentname as agentName,count(1) as agentID from b_order a,b_user b where a.agentid <> 1 and a.agentid=b.userid group by a.agentid order by count(1) desc LIMIT 0,10]]>
 	</select>
 	
 	<select id="getProdList" resultMap="prodRS" parameterClass="orderVO">
 		select productid as prodid,productName as prodname,price from b_product
 	</select>
 	<select id="getPageOrderList" resultMap="orderRS" parameterClass="string">
-		SELECT * FROM b_order a left join b_agent b on a.agentid=b.agentid
+		SELECT a.*,b.agentname as agentname FROM b_order a left join b_user b on a.agentid=b.userid
 		 WHERE 1=1 $sqlwhere$  
 	
 	</select>
@@ -106,7 +106,7 @@
 		select DATE_FORMAT(a.newdate,'%d') as day, ifnull( b.counts,0) as num from 
 		(select DATE_ADD(SYSDATE(),INTERVAL -daynum DAY) as newdate from b_daycycle) as a
 		left join 
-		(select createdate,agentid,count(1) as counts from b_order b group by createdate,agentid )  as b on  DATE_FORMAT(b.createdate,'%m-%d-%Y')=DATE_FORMAT(a.newdate,'%m-%d-%Y')
+		(select DATE_FORMAT(b.createdate,'%m-%d-%Y') as date,agentid,count(1) as counts from b_order b group by DATE_FORMAT(b.createdate,'%m-%d-%Y'),agentid )  as b on  b.date=DATE_FORMAT(a.newdate,'%m-%d-%Y')
 		<isParameterPresent>
 		<isPropertyAvailable property="agentID"><isNotNull property="agentID"><isNotEmpty prepend="AND" property="agentID"> b.agentID = #agentID# </isNotEmpty></isNotNull></isPropertyAvailable>
 		</isParameterPresent> 
@@ -114,7 +114,7 @@
 	</select>
 	
 	<select id="getOrderPageCounts" resultClass="int" parameterClass="orderVO">
-		SELECT count(1) FROM b_order a left join b_agent b on a.agentid=b.agentid
+		SELECT count(1) FROM b_order a left join b_user b on a.agentid=b.userid
 		 WHERE 1=1 
 		<isParameterPresent>
 		<isPropertyAvailable property="regionCode"><isNotNull property="regionCode"><isNotEmpty prepend="AND" property="regionCode"> regionCode = #regionCode#  </isNotEmpty></isNotNull></isPropertyAvailable>
@@ -124,7 +124,7 @@
 		<isPropertyAvailable property="prodID"><isNotNull property="prodID"><isNotEmpty prepend="AND" property="prodID"> prodID = #prodID# </isNotEmpty></isNotNull></isPropertyAvailable>
 		<isPropertyAvailable property="beginTime"><isNotNull property="beginTime"><isNotEmpty prepend="AND" property="beginTime"> createdate >= str_to_date(#beginTime#,'%Y-%m-%d %H:%i:%s') </isNotEmpty></isNotNull></isPropertyAvailable>
 		<isPropertyAvailable property="endTime"><isNotNull property="endTime"><isNotEmpty prepend="AND" property="endTime"> <![CDATA[ createdate <= str_to_date(#endTime#,'%Y-%m-%d %H:%i:%s') ]]> </isNotEmpty></isNotNull></isPropertyAvailable>
-		<isPropertyAvailable property="agentName"><isNotNull property="agentName"><isNotEmpty prepend="AND" property="agentName"> b.agentName = #agentName# </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="agentName"><isNotNull property="agentName"><isNotEmpty prepend="AND" property="agentName"> b.username = #agentName# </isNotEmpty></isNotNull></isPropertyAvailable>
 		<isPropertyAvailable property="agentID"><isNotNull property="agentID"><isNotEmpty prepend="AND" property="agentID"> a.agentID = #agentID# </isNotEmpty></isNotNull></isPropertyAvailable>
 		</isParameterPresent>
 	</select>
