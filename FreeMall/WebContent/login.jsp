@@ -53,6 +53,20 @@
                     <span class="like2"><a href="javascript:void(0)" onclick="document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">账号登录</a></span>
                 </div>
 
+<<<<<<< HEAD
+=======
+        <div class="loginBox">
+            <div class="loginBoxCenter">
+                <p><label for="username">系统登陆：</label></p>
+                <p><input type="text" id="username" name="username" class="loginInput" autofocus="autofocus" required="required" autocomplete="off" placeholder="请输入用户名" value="" /></p>
+                <p><input type="password" id="password" name="password" class="loginInput" required="required" placeholder="请输入密码" value="" /></p>
+                <div style="text-align:center;"><font color=red><%=loginErrInfo %></font></div>
+            </div>
+            
+            <div class="loginBoxButtons">
+                <a href="<%=context%>/userLoginlist.do?method=registerUser">用户注册</a>
+                <button type="submit" class="loginBtn" data-toggle="button">登录</button>
+>>>>>>> branch 'master' of https://github.com/kunfang/FreeMall.git
             </div>
         </div>
     </div>

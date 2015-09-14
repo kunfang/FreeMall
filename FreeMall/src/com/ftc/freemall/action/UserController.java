@@ -1,19 +1,15 @@
 package com.ftc.freemall.action;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
 import java.util.List;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.ftc.freemall.service.SysMenuService;
 import com.ftc.freemall.service.UserService;
 import com.ftc.freemall.vo.SysMenuVO;
@@ -219,5 +215,59 @@ public class UserController {
 		
 	}
 	
+	/**
+     *@param  [User,Model,HttpServletRequest] [当前登录驻点员,绑定属性值,获取Session会话]
+     *@return  [返回需要跳转的页面名称]
+     *@description [用户注册]
+     */
+	@RequestMapping(params="method=registerUser") 
+	public String registerUser(com.ftc.freemall.vo.User user,Model model,HttpServletRequest request){
+		if (logger.isDebugEnabled()) {
+			logger.debug("registerUser(User) - start"); //$NON-NLS-1$
+		}
+		String result="registerUser";
+		try{
+			if(user.getUsername()!=null && !"".equals(user.getUsername())){
+				user.setPassword(this.encryPass(user.getPassword()));
+				uservice.doInsert(user);
+				result="login";
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		if (logger.isDebugEnabled()) {
+			logger.debug("registerUser(User) - end"); //$NON-NLS-1$
+		}
+		return result;
+	}
+	
+	/**
+     *@param  [User,Model,HttpServletRequest] [当前登录驻点员,绑定属性值,获取Session会话]
+     *@return  [返回需要跳转的页面名称]
+     *@description [用户注册]
+     */
+	@RequestMapping(params="method=checkUserName") 
+	public void checkUserName(String username,Model model,HttpServletRequest request,HttpServletResponse response){
+		if (logger.isDebugEnabled()) {
+			logger.debug("checkUserName(User) - start"); //$NON-NLS-1$
+		}
+		String str="1";
+		try{
+			if(username!=null && !"".equals(username)){
+				int result=uservice.getUserByUsername(username);
+				if(result>0){
+					str="2";
+				}
+			}
+			response.setContentType("text/html; charset=UTF-8");
+			response.getWriter().write(str);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		if (logger.isDebugEnabled()) {
+			logger.debug("checkUserName(User) - end"); //$NON-NLS-1$
+		}
+	}
 
 }

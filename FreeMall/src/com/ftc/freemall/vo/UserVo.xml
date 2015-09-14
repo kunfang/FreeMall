@@ -13,15 +13,21 @@
 		<result property="appearance" column="appearance" />
 		<result property="timeStamp" column="timeStamp" />
 		<result property="isClient" column="isClient" />
+		<result property="email" column="email" />
+		<result property="bankNo" column="bankNo" />
 	</resultMap>
 	
 	<select id="getUserById" resultMap="userRS" parameterClass="java.lang.String">
 		select * from b_user  where userid = #userid#
+	</select>
+	
+	<select id="getTotalCount" resultClass="int" parameterClass="string">
+	    select count(1) from b_user where username=#username#
 	</select>	
 	
 
 	<select id="getUserByCode" resultMap="userRS" parameterClass="java.lang.String">
-		select * from b_user  where isClient=1 and username = #username#
+		select * from b_user  where isClient=1 and username=#username#
 	</select>
 	
 	<delete id="doDelete" parameterClass="java.lang.String">
@@ -33,6 +39,26 @@
 		<isPropertyAvailable property="password"><isNotNull prepend="," property="password">password=#password# </isNotNull></isPropertyAvailable>
 		</isParameterPresent></dynamic> WHERE userid=#userid#
 	</update>
+	
+	<insert id="doInsert" parameterClass="userVO">
+		INSERT INTO b_user<dynamic><isParameterPresent>(username
+		  <isPropertyAvailable property="password"><isNotNull prepend="," property="password">password</isNotNull></isPropertyAvailable>
+		  <isPropertyAvailable property="mobile"><isNotNull prepend="," property="mobile">mobile</isNotNull></isPropertyAvailable>
+		  <isPropertyAvailable property="appearance"><isNotNull prepend="," property="appearance">appearance</isNotNull></isPropertyAvailable>
+		  ,timeStamp
+		  <isPropertyAvailable property="isClient"><isNotNull prepend="," property="isClient">isClient</isNotNull></isPropertyAvailable>
+		  <isPropertyAvailable property="email"><isNotNull prepend="," property="email">email</isNotNull></isPropertyAvailable>
+		  <isPropertyAvailable property="bankNo"><isNotNull prepend="," property="bankNo">bankNo</isNotNull></isPropertyAvailable>
+		) VALUES(#username#
+		  <isPropertyAvailable property="password"><isNotNull prepend="," property="password">#password#</isNotNull></isPropertyAvailable>
+		  <isPropertyAvailable property="mobile"><isNotNull prepend="," property="mobile">#mobile#</isNotNull></isPropertyAvailable>
+		  <isPropertyAvailable property="appearance"><isNotNull prepend="," property="appearance">#appearance#</isNotNull></isPropertyAvailable>
+		  ,SYSDATE()
+		  <isPropertyAvailable property="isClient"><isNotNull prepend="," property="isClient">#isClient#</isNotNull></isPropertyAvailable>
+		  <isPropertyAvailable property="email"><isNotNull prepend="," property="email">#email#</isNotNull></isPropertyAvailable>
+		  <isPropertyAvailable property="bankNo"><isNotNull prepend="," property="bankNo">#bankNo#</isNotNull></isPropertyAvailable>
+		)</isParameterPresent></dynamic> 
+	</insert>
 	
 </sqlMap>
 
