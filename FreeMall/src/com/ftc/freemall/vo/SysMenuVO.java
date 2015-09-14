@@ -14,6 +14,16 @@ public class SysMenuVO implements Serializable{
 	private String menuUrl; //菜单访问地址
 	private Float menuLevel; //菜单级别
 	private String parentId; //上级菜单ID
+	private String className; //菜单样式
+	
+	
+	public String getClassName() {
+		return className;
+	}
+
+	public void setClassName(String className) {
+		this.className = className;
+	}
 
 	public String getMenuId(){
 	  return menuId;

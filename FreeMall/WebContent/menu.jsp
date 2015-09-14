@@ -21,118 +21,59 @@
 	}
 	
 %>
-
-<style type="text/css">
-.menuup {
-color: #FF0000;
-}
-.menudown {
-color: #000000;
-}
-</style>
-
-<div class="top_img">
-	<div style="float:left;margin-left:0px;"></div>
-	<div style="float:left;margin-left:90px;margin-top:10px;" id="taskalert"  name="taskalert">
-	</div>
-
-</div>	
-	<div style="width:980px; margin:0 auto; height:20px;">
-		<ul class="top_ul">
-				 
-			<li><a href="<%=context%>/userLoginlist.do?method=pwd&isnew=Y">修改密码</a></li>
-			<!--<li>|</li>-->
-			<!--<li><a href="#" onclick="javascript:helponclick();">操作帮助</a></li>-->
-			<li>|</li>
-			<li><a href="<%=context%>/userLoginlist.do?method=logout">退出系统</a></li>
-			<li>|</li>
-			<li>操作员 : <%=session.getAttribute("trueName")%></li>    
-		</ul>
-		<!-- <div class="top_text"></div> -->
-	</div>
-	<%--
-    <div class="line_ul_div" >
-		<ul class="line_ul" >	
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"><span>零元汇</span>合作伙伴平台</a>
+				<ul class="user-menu">
+					<li class="dropdown pull-right">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span><%=session.getAttribute("trueName")%><span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="<%=context%>/userLoginlist.do?method=pwd&isnew=Y"><span class="glyphicon glyphicon-user"></span>修改密码</a></li>
+							<!-- <li><a href="user.html"><span class="glyphicon glyphicon-cog"></span>设置</a></li> -->
+							<li><a href="<%=context%>/userLoginlist.do?method=logout"><span class="glyphicon glyphicon-log-out"></span>登出</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div><!-- /.container-fluid -->
+	</nav>
+	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+		<form role="search">
+			<div class="form-group">
+				菜单导航
+			</div>
+		</form>
+		<ul class="nav menu">
 			<%
-			String role = "";
-			
-			if(session.getAttribute("empModules") != null)
-			{
-				role = session.getAttribute("empModules").toString();
-			}
-			if("admin".equalsIgnoreCase(user.getUserCde()) || role.indexOf("1") >= 0)
-			{
+			for(int i=0; i<assessSysMenuList.size(); i++){
+				SysMenuVO assessSysMenuVO = assessSysMenuList.get(i);
 			%>
-			<li  class="line_up_li" id="menumain11" name="menumain" ><a href="<%=context%>/info.do?mhd=toList&menuid=11">公告消息</a></li>
-			<li class="line_li" >|</li>
-			<%
-			}
-			if("admin".equalsIgnoreCase(user.getUserCde()) || role.indexOf("2") >= 0)
-			{
-			%>
-			<li  class="line_up_li" id="menumain12" name="menumain" ><a href="<%=context%>/ad.do?mhd=toList&menuid=12" >首页图片</a></li>
-			<li class="line_li">|</li>
-			<%
-			}
-			if("admin".equalsIgnoreCase(user.getUserCde()) || role.indexOf("3") >= 0)
-			{
-			%>
-			<li  class="line_up_li" id="menumain13" name="menumain" ><a href="<%=context%>/version.do?mhd=toList&menuid=13" >版本管理</a></li>
-			<li class="line_li">|</li>
-			<%
-			}
-			if("admin".equalsIgnoreCase(user.getUserCde()) || role.indexOf("4") >= 0)
-			{
-			%>
-			<li  class="line_up_li" id="menumain14" name="menumain" ><a href="<%=context%>/product.do?mhd=toList&menuid=14" >产品管理</a></li>
-			<li class="line_li">|</li>
-			<%
-			}
-			if("admin".equalsIgnoreCase(user.getUserCde()) || role.indexOf("5") >= 0)
-			{
-			%>
-			<li  class="line_up_li" id="menumain15" name="menumain" ><a href="<%=context%>/sync.jsp?menuid=15">数据同步</a>
-			<li class="line_li">|</li>
-			<%
-			}
-			if("admin".equalsIgnoreCase(user.getUserCde()) || role.indexOf("6") >= 0)
-			{
-			%>
-			<li  class="line_up_li" id="menumain16" name="menumain" ><a href="<%=context%>/transaction.do?mhd=toList&menuid=16">交易清单</a></li>
-			<li class="line_li">|</li>
-			<%
-			}
-			if("admin".equalsIgnoreCase(user.getUserCde()) || role.indexOf("7") >= 0)
-			{
-			%>
-			<li  class="line_up_li" id="menumain17" name="menumain" ><a href="<%=context%>/user/unemp.do?mhd=toList&menuid=17" >用户管理</a></li>
-			<li class="line_li">|</li>
-			<%
-			}
-			if("admin".equalsIgnoreCase(user.getUserCde()) || role.indexOf("8") >= 0)
-			{
-			%>
-			<li  class="line_up_li" id="menumain18" name="menumain" ><a href="<%=context%>/client/usermodule.do?mhd=toClientInsert&menuid=18"  >权限管理</a></li>
-			<li class="line_li">|</li>
-			<%
-			}
-			if("admin".equalsIgnoreCase(user.getUserCde()) || role.indexOf("9") >= 0)
-			{
-			%>
-			<li  class="line_up_li" id="menumain19" name="menumain" >
-				<a href="<%=context%>/yc/casemanage.do?mhd=toList&menuid=19" >案件处理</a>
-				<ul>
-					<li><a href="www.baidu.com">百度</a></li>
-					<li><a href="www.alipay.com">支付宝</a></li>
-				</ul>	
+			<!-- <li>
+				<a href="ranking.html"><span class="glyphicon glyphicon-home"></span>首页</a>
+			</li>
+			<li><a href="order.html"><span class="glyphicon glyphicon-list-alt"></span>订单查询</a></li>
+			<li><a href="geturl.html"><span class="glyphicon glyphicon-share"></span>申领推广链接</a></li>
+			<li><a href="appeal.html"><span class="glyphicon glyphicon-earphone"></span>申诉</a></li>
+			<li><a href="user.html"><span class="glyphicon glyphicon-user"></span>个人设置</a></li> -->
+			<li>
+				<a href="<%=context%><%=assessSysMenuVO.getMenuUrl()%>&agentID=<%=session.getAttribute("userId") %>&menuNme=<%=assessSysMenuVO.getMenuNme() %>&menuId=<%=assessSysMenuVO.getMenuId() %>"><span class="glyphicon glyphicon-user<%=assessSysMenuVO.getClassName() %>"></span><%=URLDecoder.decode(assessSysMenuVO.getMenuNme(),"UTF-8") %></a>
 			</li>
 			<%
 			}
 			%>
+			<li role="presentation" class="divider"></li>
 		</ul>
-	</div>
-	 --%>
-  <script language="javascript">
+		<div class="attribution">copy right &copy;版权归零元汇所有</div>
+	</div><!--/.sidebar-->
+	
+  <%-- <script language="javascript">
   //	document.getElementsByName("menumain")[<%=(Integer.parseInt(menuid)-11)%>].className = "line_on_li";  //设置菜单颜色
 //	document.getElementById('menumain'+'<%=(Integer.parseInt(menuid))%>').className = "line_on_li";
 //	function helponclick(){
@@ -211,29 +152,7 @@ color: #000000;
 					}
 				}
 			%>
-			<%--
-			<li id="firstpage"><a href="<%=context%>/info.do?mhd=toList&menuid=11">公告消息</a></li>
-			<li id="firstpage">
-				<a href="<%=context%>/ad.do?mhd=toList&menuid=12">首页图片</a>
-			</li>
-			<li id="firstpage">
-				<a href="<%=context%>/version.do?mhd=toList&menuid=13">版本管理</a>
-			</li>
-			<li id="firstpage"><a href="<%=context%>/product.do?mhd=toList&menuid=14" >产品管理</a></li>
-			<li id="firstpage">
-				<a href="<%=context%>/sync.jsp?menuid=15">数据同步</a>
-			</li>
-			<li id="firstpage"><a href="<%=context%>/transaction.do?mhd=toList&menuid=16">交易清单</a></li>
-			<li id="firstpage">
-				<a href="#" >用户管理</a>
-				<ul>
-					<li><a href="<%=context%>/user/unemp.do?mhd=toList&menuid=17">用户查询</a></li>
-					<li><a href="<%=context%>/user/unemp.do?mhd=toList&menuid=17">新增用户</a></li>
-				</ul>
-			</li>
-			<li id="firstpage"><a href="<%=context%>/client/usermodule.do?mhd=toClientInsert&menuid=18"  >权限管理</a></li> 
-			<li id="firstpage"><a href="<%=context%>/yc/casemanage.do?mhd=toList" >案件处理</a></li>--%>
 			
 		</ul>
 		<br style="clear: left" />
-	</div>
+	</div> --%>

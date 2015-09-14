@@ -13,6 +13,7 @@
 		<result property="menuUrl" column="Url" />
 		<result property="menuLevel" column="Level" />
 		<result property="parentId" column="UpMenu" />
+		<result property="className" column="classname" />
 	</resultMap>
 		
 	
