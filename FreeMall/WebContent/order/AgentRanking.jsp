@@ -106,12 +106,13 @@
                 $.getJSON('<%=context%>/order.do?method=getSalesStatis&userid=<%=session.getAttribute("userId")%>', function (json) {
                     categories = json.categories;
                     values = json.values;
+                    alert(categories);
                 });
              	
              	
                 var option = {
                 	    title : {
-                	        text: '15天销量统计'
+                	        text: '每日销量统计（近15天）'
                 	    },
                 	    tooltip : {
                 	    	show: true

@@ -103,7 +103,7 @@
 	</select>
 	
 	<select id="getSalesStatis" resultMap="statisRS" parameterClass="orderVO">
-		select DATE_FORMAT(a.newdate,'%y%m%d') as day, ifnull( b.counts,0) as num from 
+		select DATE_FORMAT(a.newdate,'%d') as day, ifnull( b.counts,0) as num from 
 		(select DATE_ADD(SYSDATE(),INTERVAL -daynum DAY) as newdate from b_daycycle) as a
 		left join 
 		(select createdate,agentid,count(1) as counts from b_order b group by createdate,agentid )  as b on  DATE_FORMAT(b.createdate,'%m-%d-%Y')=DATE_FORMAT(a.newdate,'%m-%d-%Y')
