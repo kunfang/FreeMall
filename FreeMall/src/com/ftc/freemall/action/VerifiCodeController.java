@@ -1,8 +1,10 @@
 package com.ftc.freemall.action;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.Set;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -11,9 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.cloopen.rest.sdk.CCPRestSmsSDK;
 import com.ftc.foundation.config.DefaultParams;
 import com.ftc.foundation.util.VerifiCode;
+import com.ftc.foundation.util.VerifyCodeImage;
 import com.ftc.freemall.service.VerifiCodeService;
 
 @Controller("VerifiCodeController")
@@ -59,7 +63,47 @@ public class VerifiCodeController {
 		}
 	}
 	
-	public String checkVerifiCode() {
-		return null;
+	@RequestMapping(params="method=getImage")
+	public void getVerifiCodeImage(HttpServletResponse response,HttpSession session,@RequestParam(value="w",required=true) int w,@RequestParam(value="h",required=true) int h){
+		System.out.println("getVerifiCodeImage");
+		response.setHeader("Pragma", "No-cache");  
+        response.setHeader("Cache-Control", "no-cache");  
+        response.setDateHeader("Expires", 0);  
+        response.setContentType("image/jpeg"); 
+        
+      //生成随机字串  
+        String verifyCode = VerifyCodeImage.generateVerifyCode(4);
+        session.setAttribute("rand", verifyCode.toLowerCase());
+        
+        OutputStream output = null;
+        
+        try {
+        	output = response.getOutputStream();
+			VerifyCodeImage.outputImage(w, h, output, verifyCode);
+			output.flush();
+			output.close();
+			
+			System.out.println("verifyCode:"+verifyCode);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(params="method=checkImgCode")
+	public void checkImgCode(HttpServletResponse response,HttpSession session,@RequestParam(value="code",required=true) String code) {
+		String rand = (String)session.getAttribute("rand");
+		
+		
+		PrintWriter write = null;
+		try { 
+			write = response.getWriter();
+			if (rand.equalsIgnoreCase(code)) {
+				write.print("000000");
+			} else {
+				write.print("300000");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
