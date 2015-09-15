@@ -94,7 +94,7 @@ public class OrderServiceImpl implements OrderService {
 			     if(order.getAgentName()!=null && !"".equals(order.getAgentName())){
 						sqlWhere +=" and b.username like '"+order.getAgentName().trim()+"'";
 				 }
-			     if(order.getAgentID()!=null || order.getAgentID().intValue() != 1){
+			     if(order.getAgentID()!=null && order.getAgentID().intValue() != 1){
 						sqlWhere +=" and b.userid = "+order.getAgentID();
 				 }
 			     
