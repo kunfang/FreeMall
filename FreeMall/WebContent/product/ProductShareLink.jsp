@@ -5,6 +5,8 @@
 
 <% String path = request.getContextPath();
    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
+   String strProdName = java.net.URLEncoder.encode("百年蔷薇五件套","UTF-8");
+   String agentid=session.getAttribute("userId").toString();
 %>
 <!DOCTYPE HTML>
 <html>
@@ -21,7 +23,7 @@
 		common : {
 			bdText : '百年蔷薇五件套',	
 			bdDesc : '',
-			bdUrl : '<%=basePath %>/lingyh/Item3.jsp?prodid=3&price=23&prodname=百年蔷薇五件套&agentid=<%=session.getAttribute("userId")%>', 	
+			bdUrl : '<%=basePath %>/lingyh/Item3.jsp?prodid=3&price=23&prodname=<%=strProdName %>&agentid=<%=agentid%>', 	
 			bdPic : '<%=path %>/img/item/item1.png'
 		},
 		share : [{
@@ -32,10 +34,10 @@
 			viewPos : 'top',
 			viewColor : 'black',
 			viewSize : '32',
-			viewList : ['weixin','qzone','tsina']
+			viewList : ['weixin','sqq','qzone','tsina']
 		}],
 		selectShare : [{
-			"bdselectMiniList" : ['weixin',,'qzone','tsina']
+			"bdselectMiniList" : ['weixin','sqq','qzone','tsina']
 		}]
 	}
 	with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
@@ -64,7 +66,7 @@
 					<div class="bdsharebuttonbox" data-tag="share_1">
 						<a class="bds_mshare" data-cmd="mshare"></a>
 						<a class="bds_weixin" data-cmd="weixin"></a>
-					<!-- 	<a class="bds_sqq" data-cmd="sqq"></a> -->
+					 	<a class="bds_sqq" data-cmd="sqq"></a>
 						<a class="bds_qzone" data-cmd="qzone" href="#"></a>
 						<a class="bds_tsina" data-cmd="tsina"></a>
 						<a class="bds_baidu" data-cmd="baidu"></a>										
