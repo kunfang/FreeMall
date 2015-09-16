@@ -65,7 +65,6 @@ public class VerifiCodeController {
 	
 	@RequestMapping(params="method=getImage")
 	public void getVerifiCodeImage(HttpServletResponse response,HttpSession session,@RequestParam(value="w",required=true) int w,@RequestParam(value="h",required=true) int h){
-		System.out.println("getVerifiCodeImage");
 		response.setHeader("Pragma", "No-cache");  
         response.setHeader("Cache-Control", "no-cache");  
         response.setDateHeader("Expires", 0);  

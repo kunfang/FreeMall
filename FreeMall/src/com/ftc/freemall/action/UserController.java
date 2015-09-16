@@ -226,14 +226,15 @@ public class UserController {
 		if (logger.isDebugEnabled()) {
 			logger.debug("registerUser(User) - start"); //$NON-NLS-1$
 		}
-		String result="registerUser";
+		String result="register";
 		try{
 			if(user.getUsername()!=null && !"".equals(user.getUsername())){
 				user.setPassword(this.encryPass(user.getPassword()));
 				uservice.doInsert(user);
 				result="login";
+				
+				request.getSession().setAttribute("loginErrInfo", "恭喜您注册成功，请登录");
 			}
-			request.getSession().setAttribute("loginErrInfo", "恭喜您注册成功，请登录");
 		}catch(Exception e){
 			e.printStackTrace();
 		}

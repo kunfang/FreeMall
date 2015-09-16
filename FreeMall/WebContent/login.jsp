@@ -199,7 +199,7 @@
 		    	obj.src="<%=context%>/getpicservlet?validSession=1&r="+nowTime;
 		    } --%>
 </script>
-<script language="JavaScript" type="text/javascript"> 
+<script type="text/javascript"> 
 var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
     if (!isChrome) {
         $("body").html("为了更好的操作体验，请使用Chrome浏览器，<a href=\"http://w.x.baidu.com/alading/anquan_soft_down_ub/14744\" data-softurl=\"http://w.x.baidu.com/alading/anquan_soft_down_ub/14744\" target=\"_blank\">点击下载</a>");
