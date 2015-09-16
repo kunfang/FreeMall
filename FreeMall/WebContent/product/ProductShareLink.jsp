@@ -32,10 +32,10 @@
 			viewPos : 'top',
 			viewColor : 'black',
 			viewSize : '32',
-			viewList : ['weixin','sqq','qzone','tsina']
+			viewList : ['weixin','qzone','tsina']
 		}],
 		selectShare : [{
-			"bdselectMiniList" : ['weixin','sqq','qzone','tsina']
+			"bdselectMiniList" : ['weixin',,'qzone','tsina']
 		}]
 	}
 	with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
@@ -64,7 +64,7 @@
 					<div class="bdsharebuttonbox" data-tag="share_1">
 						<a class="bds_mshare" data-cmd="mshare"></a>
 						<a class="bds_weixin" data-cmd="weixin"></a>
-						<a class="bds_sqq" data-cmd="sqq"></a>
+					<!-- 	<a class="bds_sqq" data-cmd="sqq"></a> -->
 						<a class="bds_qzone" data-cmd="qzone" href="#"></a>
 						<a class="bds_tsina" data-cmd="tsina"></a>
 						<a class="bds_baidu" data-cmd="baidu"></a>										
