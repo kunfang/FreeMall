@@ -18,6 +18,7 @@ import com.ftc.freemall.vo.User;
 @RequestMapping("/userLoginlist.do")
 public class UserController {
 	private static final Logger logger = Logger.getLogger(UserController.class);
+	private String pass="";
 	
 	@Resource
 	private UserService uservice;
@@ -47,6 +48,7 @@ public class UserController {
 		if (logger.isDebugEnabled()) {
 			logger.debug("getAssessSysMenubyList(ProductVO) - start"); //$NON-NLS-1$
 		}
+		String loginPass="";
 		try {
 			List<User> listAllUser =uservice.checkLogin(user);
 			if (listAllUser==null || listAllUser.size() == 0) { //该用户无效!
@@ -56,7 +58,7 @@ public class UserController {
 				}
 				return "login";
 			}else{
-				String loginPass = user.getPassword(); //用户输入的密码
+				 loginPass = user.getPassword(); //用户输入的密码
 				if (loginPass == null || loginPass.equalsIgnoreCase(""))
 					loginPass = "6666";
 				if (listAllUser.get(0) != null &&
@@ -73,6 +75,8 @@ public class UserController {
 			
 			List<SysMenuVO> list=asms.selectAssessSysMenu(user.getUsername());
 			request.getSession().setAttribute("menuList", list);
+			request.getSession().setAttribute("pass", loginPass);
+			request.getSession().setAttribute("user", listAllUser.get(0));
 			request.getSession().setAttribute("userId", listAllUser.get(0).getUserid());
 			request.getSession().setAttribute("trueName", listAllUser.get(0).getUsername());
 		} catch (Exception e) {
@@ -86,8 +90,12 @@ public class UserController {
 		}
 
 		
-		return "index";  
+		//return "index";  
+		return "menu";
 	}
+	
+	
+
 	
 	/**
      *@param  [String] [输入的密码]
@@ -269,5 +277,43 @@ public class UserController {
 			logger.debug("checkUserName(User) - end"); //$NON-NLS-1$
 		}
 	}
-
+	
+	/**
+     *@param  [User,Model,HttpServletRequest] [当前登录驻点员,绑定属性值,获取Session会话]
+     *@return  [返回需要跳转的页面名称]
+     *@description [用户注册]
+     */
+	@RequestMapping(params="method=registerUserInfo") 
+	public String registerUserInfo(com.ftc.freemall.vo.User user,Model model,HttpServletRequest request){
+		if (logger.isDebugEnabled()) {
+			logger.debug("registerUserInfo(User) - start"); //$NON-NLS-1$
+		}
+		try{
+			if(user.getUsername()!=null && !"".equals(user.getUsername())){
+				pass=user.getPassword();
+				user.setPassword(this.encryPass(user.getPassword()));
+				uservice.doUpdate(user);
+				user.setPassword(pass);
+				model.addAttribute("userInfo",user);
+				request.setAttribute("users", user);
+			}else{
+				User uservo=uservice.toView(String.valueOf((Integer)request.getSession().getAttribute("userId")));
+				if(pass==null || "".equals(pass)){
+					pass=(String)request.getSession().getAttribute("pass");
+				}
+			    uservo.setPassword(pass);
+				model.addAttribute("userInfo",uservo);
+				request.setAttribute("users", uservo);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		
+		if (logger.isDebugEnabled()) {
+			logger.debug("registerUserInfo(User) - end"); //$NON-NLS-1$
+		}
+		return "registerUserInfo";
+	}
+	
 }

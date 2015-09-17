@@ -15,6 +15,9 @@
 		<result property="isClient" column="isClient" />
 		<result property="email" column="email" />
 		<result property="bankNo" column="bankNo" />
+		<result property="trueName" column="trueName" />
+		<result property="bankName" column="bankName" />
+		<result property="sex" column="sex" />
 	</resultMap>
 	
 	<select id="getUserById" resultMap="userRS" parameterClass="java.lang.String">
@@ -37,6 +40,11 @@
 	<update id="doUpdate" parameterClass="userVO">
 		UPDATE b_user SET userid=#userid#<dynamic><isParameterPresent>
 		<isPropertyAvailable property="password"><isNotNull prepend="," property="password">password=#password# </isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="email"><isNotNull prepend="," property="email">email=#email# </isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="bankNo"><isNotNull prepend="," property="bankNo">bankNo=#bankNo# </isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="trueName"><isNotNull prepend="," property="trueName">trueName=#trueName# </isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="bankName"><isNotNull prepend="," property="bankName">bankName=#bankName# </isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="sex"><isNotNull prepend="," property="sex">sex=#sex# </isNotNull></isPropertyAvailable>
 		</isParameterPresent></dynamic> WHERE userid=#userid#
 	</update>
 	

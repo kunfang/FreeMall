@@ -12,6 +12,9 @@ public class User {
 	private int isClient;    //0表示手机端,1代表终端
 	private String email;    //邮箱地址
 	private String bankNo;   //卡号
+	private String trueName; //真实姓名
+	private String bankName; //银行名称
+	private String sex;      //用户性别  0：男  1：女
 	
 	public int getUserid() {
 		return userid;
@@ -67,5 +70,22 @@ public class User {
 	public void setBankNo(String bankNo) {
 		this.bankNo = bankNo;
 	}
-
+	public String getTrueName() {
+		return trueName;
+	}
+	public void setTrueName(String trueName) {
+		this.trueName = trueName;
+	}
+	public String getBankName() {
+		return bankName;
+	}
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
+	}
+	public String getSex() {
+		return sex;
+	}
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
 }
