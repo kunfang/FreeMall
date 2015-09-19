@@ -290,6 +290,7 @@ public class UserController {
 		if (logger.isDebugEnabled()) {
 			logger.debug("registerUserInfo(User) - start"); //$NON-NLS-1$
 		}
+		String result="";
 		try{
 			if(user.getUsername()!=null && !"".equals(user.getUsername())){
 				pass=user.getPassword();
@@ -298,6 +299,9 @@ public class UserController {
 				user.setPassword(pass);
 				model.addAttribute("userInfo",user);
 				request.setAttribute("users", user);
+				request.setAttribute("msg", "保存成功");
+				request.setAttribute("code", "0");
+				result="showinsmsg";
 			}else{
 				User uservo=uservice.toView(String.valueOf((Integer)request.getSession().getAttribute("userId")));
 				if(pass==null || "".equals(pass)){
@@ -306,16 +310,18 @@ public class UserController {
 			    uservo.setPassword(pass);
 				model.addAttribute("userInfo",uservo);
 				request.setAttribute("users", uservo);
+				result="registerUserInfo";
 			}
 		}catch(Exception e){
+			request.setAttribute("msg", "保存个人信息失败");
+			request.setAttribute("code", "0");
 			e.printStackTrace();
 		}
-		
 		
 		if (logger.isDebugEnabled()) {
 			logger.debug("registerUserInfo(User) - end"); //$NON-NLS-1$
 		}
-		return "registerUserInfo";
+		return result;
 	}
 	
 }
