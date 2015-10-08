@@ -23,8 +23,8 @@
 		common : {
 			bdText : '百年蔷薇五件套',	
 			bdDesc : '',
-			bdUrl : '<%=basePath %>/lingyh/Item3.jsp?prodid=3&price=23&prodname=<%=strProdName %>&agentid=<%=agentid%>', 	
-			bdPic : '<%=path %>/img/item/item1.png'
+			bdUrl : '<%=basePath %>/lingyh/Item3.jsp?agentid=<%=agentid%>', 	
+			bdPic : '<%=basePath %>/img/item/item1.png'
 		},
 		share : [{
 			"bdSize" : 32
@@ -94,7 +94,6 @@
 			}); 
 			$(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
 		}(window.jQuery);
-
 		$(window).on('resize', function () {
 		  if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
 		})
