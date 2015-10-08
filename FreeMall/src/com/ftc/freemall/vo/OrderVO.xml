@@ -90,7 +90,7 @@
 	</select>
 	
 	<select id="getAgentRanking" resultMap="rankingRS" parameterClass="orderVO">
-		<![CDATA[select b.agentname as agentName,count(1) as agentID from b_order a,b_user b where a.agentid <> 1 and a.agentid=b.userid group by a.agentid order by count(1) desc LIMIT 0,10]]>
+		<![CDATA[select ifnull(b.agentname,b.username) as agentName,count(1) as agentID from b_order a,b_user b where a.agentid <> 1 and a.agentid=b.userid group by a.agentid order by count(1) desc LIMIT 0,10]]>
 	</select>
 	
 	<select id="getProdList" resultMap="prodRS" parameterClass="orderVO">
