@@ -3,6 +3,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<%
+session.removeAttribute("receiverName");
+session.removeAttribute("regionCode");
+session.removeAttribute("cityCode");
+session.removeAttribute("countyCode");
+session.removeAttribute("address");
+session.removeAttribute("receiverMobile");
+session.removeAttribute("prodID");
+session.removeAttribute("prodName");
+session.removeAttribute("price");
+session.removeAttribute("agentID");	
+
+%>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>订单提交成功</title>

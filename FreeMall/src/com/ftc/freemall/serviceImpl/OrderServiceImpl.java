@@ -208,4 +208,18 @@ public class OrderServiceImpl implements OrderService {
 		return statisList;
 	}
 
+	@Override
+	public int updatePaid(OrderVO order) throws Exception {
+		// TODO Auto-generated method stub
+		if (logger.isDebugEnabled()) {
+			logger.debug("doUpdate(order) - start"); //$NON-NLS-1$
+		}
+
+		int returnint = dao.doUpdate("order.doUpdate", order);
+		if (logger.isDebugEnabled()) {
+			logger.debug("doUpdate(order) - end"); //$NON-NLS-1$
+		}
+		return returnint;
+	}
+
 }

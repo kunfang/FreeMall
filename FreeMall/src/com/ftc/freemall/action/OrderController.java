@@ -333,4 +333,30 @@ public class OrderController {
 			logger.debug("getSalesStatis(response,userid) - end"); //$NON-NLS-1$
 		}
 	}
+	/**
+	 * 
+	 */
+	@RequestMapping(params="method=updatepaidok") 
+	public String updateOrderPaidOk(HttpServletResponse response,@RequestParam(value="orderCode",required=true) String orderCode,@RequestParam(value="paidOk",required=true) String paidOk) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("updateOrderPaidOk(OrderVO) - start"); //$NON-NLS-1$
+		}
+//		System.out.println("ordercode="+orderCode);
+//		System.out.println("paidOk="+paidOk);
+		try {
+			OrderVO order = new OrderVO();
+			order.setOrderCode(orderCode);
+			order.setPaidOk(paidOk);
+			
+			int flag = orderService.updatePaid(order);
+			System.out.println(flag);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if (logger.isDebugEnabled()) {
+			logger.debug("updateOrderPaidOk(OrderVO) - end"); //$NON-NLS-1$
+		}
+		return "order/Success";
+	}
 }

@@ -22,7 +22,10 @@
 		<result property="price" column="price" />
 		<result property="agentName" column="agentname" />
 		<result property="agentID" column="agentid" />
-		<!-- <result property="openid" column="openid" /> -->
+		<result property="openId" column="openid" />
+		<result property="isPaid" column="ispaid" />
+		<result property="orderCode" column="ordercode" />
+		<result property="paidOk" column="paidok" />
 	</resultMap>
 	<resultMap id="rankingRS" class="orderVO">
 		<result property="agentName" column="agentname" />
@@ -49,7 +52,10 @@
 		<isPropertyAvailable property="prodName"><isNotNull prepend="," property="prodName">prodName</isNotNull></isPropertyAvailable>
 		<isPropertyAvailable property="price"><isNotNull prepend="," property="price">price</isNotNull></isPropertyAvailable>
 		<isPropertyAvailable property="agentID"><isNotNull prepend="," property="agentID">agentID</isNotNull></isPropertyAvailable>
-		<!-- <isPropertyAvailable property="openid"><isNotNull prepend="," property="openid">openid</isNotNull></isPropertyAvailable> -->
+		<isPropertyAvailable property="openId"><isNotNull prepend="," property="openId">openId</isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="isPaid"><isNotNull prepend="," property="isPaid">isPaid</isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="orderCode"><isNotNull prepend="," property="orderCode">orderCode</isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="paidOk"><isNotNull prepend="," property="paidOk">paidOk</isNotNull></isPropertyAvailable>
 		) VALUES(#receiverMobile#,SYSDATE()
 		<isPropertyAvailable property="receiverName"><isNotNull prepend="," property="receiverName">#receiverName#</isNotNull></isPropertyAvailable>
 		<isPropertyAvailable property="regionCode"><isNotNull prepend="," property="regionCode">#regionCode#</isNotNull></isPropertyAvailable>
@@ -60,7 +66,10 @@
 		<isPropertyAvailable property="prodName"><isNotNull prepend="," property="prodName">#prodName#</isNotNull></isPropertyAvailable>
 		<isPropertyAvailable property="price"><isNotNull prepend="," property="price">#price#</isNotNull></isPropertyAvailable>
 		<isPropertyAvailable property="agentID"><isNotNull prepend="," property="agentID">#agentID#</isNotNull></isPropertyAvailable>
-		<!-- <isPropertyAvailable property="openid"><isNotNull prepend="," property="openid">#openid#</isNotNull></isPropertyAvailable> -->
+		<isPropertyAvailable property="openId"><isNotNull prepend="," property="openId">#openId#</isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="isPaid"><isNotNull prepend="," property="isPaid">#isPaid#</isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="orderCode"><isNotNull prepend="," property="orderCode">#orderCode#</isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="paidOk"><isNotNull prepend="," property="paidOk">#paidOk#</isNotNull></isPropertyAvailable>
 		)</isParameterPresent></dynamic> 
 	</insert>
 	
@@ -128,6 +137,19 @@
 		<isPropertyAvailable property="agentID"><isNotNull property="agentID"><isNotEmpty prepend="AND" property="agentID"> a.agentID = #agentID# </isNotEmpty></isNotNull></isPropertyAvailable>
 		</isParameterPresent>
 	</select>
+	<update id="doUpdate" parameterClass="orderVO">
+		UPDATE b_order SET paidOk=#paidOk#<dynamic><isParameterPresent>
+		<isPropertyAvailable property="regionCode"><isNotNull property="regionCode"><isNotEmpty prepend="AND" property="regionCode"> regionCode = #regionCode#  </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="cityCode"><isNotNull property="cityCode"><isNotEmpty prepend="AND" property="cityCode"> cityCode = #cityCode# </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="countyCode"><isNotNull property="countyCode"><isNotEmpty prepend="AND" property="countyCode"> countyCode = #countyCode# </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="prodName"><isNotNull property="prodName"><isNotEmpty prepend="AND" property="prodName"> prodName = #prodName# </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="prodID"><isNotNull property="prodID"><isNotEmpty prepend="AND" property="prodID"> prodID = #prodID# </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="beginTime"><isNotNull property="beginTime"><isNotEmpty prepend="AND" property="beginTime"> createdate >= str_to_date(#beginTime#,'%Y-%m-%d %H:%i:%s') </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="endTime"><isNotNull property="endTime"><isNotEmpty prepend="AND" property="endTime"> <![CDATA[ createdate <= str_to_date(#endTime#,'%Y-%m-%d %H:%i:%s') ]]> </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="agentName"><isNotNull property="agentName"><isNotEmpty prepend="AND" property="agentName"> b.username = #agentName# </isNotEmpty></isNotNull></isPropertyAvailable>
+		<isPropertyAvailable property="agentID"><isNotNull property="agentID"><isNotEmpty prepend="AND" property="agentID"> a.agentID = #agentID# </isNotEmpty></isNotNull></isPropertyAvailable>
+		</isParameterPresent></dynamic> WHERE orderCode=#orderCode#
+	</update>
 </sqlMap>
 
 

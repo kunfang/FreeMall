@@ -17,8 +17,43 @@ public class OrderVO implements Serializable{
 	private Integer prodID; //产品ID
 	private String prodName; // 产品名称
 	private String price;
-	
+	private String isPaid; //是否已付款
+	private String openId; //微信用户OPenid
+	private String orderCode; //订单号
 	private String beginTime;
+	private String paidOk;	//是否支付完成
+	
+	public String getPaidOk() {
+		return paidOk;
+	}
+
+	public void setPaidOk(String paidOk) {
+		this.paidOk = paidOk;
+	}
+
+	public String getIsPaid() {
+		return isPaid;
+	}
+
+	public void setIsPaid(String isPaid) {
+		this.isPaid = isPaid;
+	}
+
+	public String getOpenId() {
+		return openId;
+	}
+
+	public void setOpenId(String openId) {
+		this.openId = openId;
+	}
+
+	public String getOrderCode() {
+		return orderCode;
+	}
+
+	public void setOrderCode(String orderCode) {
+		this.orderCode = orderCode;
+	}
 	private String endTime;
 	
 	private String agentName;

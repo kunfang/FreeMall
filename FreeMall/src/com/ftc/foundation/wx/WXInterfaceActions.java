@@ -3,6 +3,7 @@ package com.ftc.foundation.wx;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,8 +13,11 @@ import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.ftc.freemall.vo.OrderVO;
 
 @Controller("wxController")
 @RequestMapping("/wx.do")
@@ -41,7 +45,7 @@ public class WXInterfaceActions {
 			out = null;
 		}
 		
-	}
+	}	
 	
 	@RequestMapping(params="method=pageConfig")
 	public void getItemPage(@RequestParam(value="url",required=true) String url,HttpServletResponse response) {
@@ -65,6 +69,14 @@ public class WXInterfaceActions {
 		if (logger.isDebugEnabled()) {
 			logger.debug("getItemPage(url) - end"+url);
 		}
+	}
+	
+	/**
+	 * pre_payid
+	 * @param ov
+	 */
+	public void Unifiedorder(OrderVO ov) {
+		
 	}
 	
 	public static void main(String[] args) {

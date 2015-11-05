@@ -3,6 +3,8 @@ package com.ftc.foundation.wx;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Formatter;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,11 +12,15 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import net.sf.json.JSONObject;
 
 import com.ftc.foundation.config.DefaultParams;
 import com.ftc.foundation.http.HttpRequester;
 import com.ftc.foundation.http.HttpRespons;
+import com.ftc.foundation.util.MD5;
+
 
 /**
  * 
@@ -97,7 +103,7 @@ public class WXUtil {
     }
     
     private static String create_nonce_str() {
-    	return UUID.randomUUID().toString();
+    	return UUID.randomUUID().toString().replace("-", "");
     }
     
     private static String create_timestamp() {
@@ -197,10 +203,12 @@ public class WXUtil {
 			e.printStackTrace();
 		}
     	return null;
-    }
+    }    
+    
+    
     
     public static void main(String[] args) {
     	//getTicket();
-    	System.out.println(getTicketFromWX());
+    	
 	}
 }

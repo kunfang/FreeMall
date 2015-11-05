@@ -25,6 +25,35 @@
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
+  <servlet>
+    <servlet-name>PayServlet</servlet-name>
+    <servlet-class>com.ftc.freemall.pay.PayServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>OAuthGetCode</servlet-name>
+    <servlet-class>com.ftc.freemall.pay.OAuthGetCode</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>CallbackUrl</servlet-name>
+    <servlet-class>com.ftc.freemall.pay.CallbackUrl</servlet-class>
+  </servlet>
+
+
+
+  <servlet-mapping>
+    <servlet-name>PayServlet</servlet-name>
+    <url-pattern>/PayServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>OAuthGetCode</servlet-name>
+    <url-pattern>/OAuthGetCode</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CallbackUrl</servlet-name>
+    <url-pattern>/CallbackUrl</url-pattern>
+  </servlet-mapping>
+  
+  
   <servlet-mapping>
     <servlet-name>springmvc</servlet-name>
     <url-pattern>*.do</url-pattern>

@@ -14,4 +14,5 @@ public interface OrderService {
 	public List<OrderVO> getProdList() throws Exception;
 	public int getOrderCounts(OrderVO order) throws Exception;
 	public List<SalesStatisVO> getSalesStatis(int agentid) throws Exception;
+	public int updatePaid(OrderVO order) throws Exception;
 }
